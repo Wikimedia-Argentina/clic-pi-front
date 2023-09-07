@@ -1,0 +1,24 @@
+services:
+  app:
+    image: "registry.khem.io/khemlabs/tourism-frontend:${TAG}"
+    build:
+      context: ./
+      target: runner
+    dns: 8.8.8.8
+    env_file: "./.env.docker"
+    environment:
+      - "NODE_ENV=${NODE_ENV:-production}"
+    volumes:
+      - "/app/node_modules"
+      - "app:/app"
+    networks:
+      - frontend
+
+volumes:
+  app:
+
+networks:
+  frontend:
+    name: "${NETWORK_NAME:-corvus-network}"
+    driver: "${NETWORK_DRIVER:-overlay}"
+    external: true
