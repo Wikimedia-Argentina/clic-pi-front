@@ -49,7 +49,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 # FIRST CREATE THE .env.docker and .env FILE (an examples are available at .env.docker.example and .env.example)
 
 # Create the network using the needed driver and set up in .env file
-docker network create tourism-network
+docker network create corvus-network
 
 # THEN start APP container
 TAG=[x.x.x] docker compose -f compose.yml -f compose.prod.yml up -d app
