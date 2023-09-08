@@ -1,6 +1,6 @@
 services:
   app:
-    image: "registry.khem.io/khemlabs/tourism-frontend:${TAG}"
+    image: "registry.khem.io/khemlabs/corvus-frontend:${TAG}"
     build:
       context: ./
       target: runner

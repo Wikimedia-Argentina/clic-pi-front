@@ -1,6 +1,6 @@
 services:
   app:
-    image: "khemlabs/tourism-frontend:${TAG:-latest}"
+    image: "khemlabs/corvus-frontend:${TAG:-latest}"
     env_file: "./.env"
     build:
       context: ./
@@ -13,5 +13,5 @@ services:
 
 networks:
   frontend:
-    name: "${NETWORK_NAME:-tourism-network}"
+    name: "${NETWORK_NAME:-corvus-network}"
     driver: "${NETWORK_DRIVER:-overlay}"
