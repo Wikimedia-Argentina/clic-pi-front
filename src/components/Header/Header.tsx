@@ -3,15 +3,15 @@ import HeaderDesktop from "./HeaderDesktop";
 import HeaderMobile from "./HeaderMobile";
 
 function Header() {
-  const scrolling = useScrollDetection();
-  const headerClass = scrolling ? "mix-blend-difference" : "";
+  // const scrolling = useScrollDetection();
+  // const headerClass = scrolling ? "mix-blend-difference" : "" ${headerClass};
 
   return (
-    <div className={`text-white ${headerClass}`}>
-      <div className="block md:hidden">
+    <div className={`text-white `}>
+      <div className="block  lg:hidden">
         <HeaderMobile />
       </div>
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <HeaderDesktop />
       </div>
     </div>

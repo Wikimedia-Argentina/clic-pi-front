@@ -1,6 +1,6 @@
 {
   "name": "corvus-site",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,11 +9,7 @@
     "lint": "next lint",
     "copy-hooks": "yarn git-hooks",
     "run-scripts": "yarn copy-hooks",
-    "prestart": "yarn run-scripts",
-    "postinstall": "yarn run-scripts",
-    "postuninstall": "yarn run-scripts",
-    "postadd": "yarn run-scripts",
-    "postremove": "yarn run-scripts",
+    "predev": "yarn run-scripts",
     "docker:start": "pm2-runtime start ecosystem.config.js"
   },
   "dependencies": {
@@ -28,7 +24,7 @@
     "eslint": "^8.48.0",
     "eslint-config-next": "^13.4.19",
     "eslint-config-prettier": "^9.0.0",
-    "git-hooks": "git+https://bitbucket.org/khemlabs/git-hooks.git#0.0.8",
+    "flowbite-datepicker": "^1.2.2",
     "next": "^13.4.19",
     "nprogress": "^0.2.0",
     "postcss": "^8.4.29",
@@ -41,5 +37,7 @@
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "git-hooks": "git+https://bitbucket.org/khemlabs/git-hooks.git#0.0.8"
+  }
 }

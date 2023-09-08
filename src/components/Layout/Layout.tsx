@@ -4,6 +4,8 @@ import { PropsWithChildren } from "react";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Form from "@/components/Form";
+import Banner from "@/components/Banner";
 
 type Props = PropsWithChildren<{}>;
 
@@ -11,7 +13,10 @@ function Layout({ children }: Props) {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <Banner/>
+      <div className="py-[50px] h-[600px] bg-white flex justify-center"><Form/></div>
+      {/* <main>{children}</main>
+       */}
       <Footer />
     </>
   );
