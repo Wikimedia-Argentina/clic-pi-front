@@ -1,3 +1,3 @@
 export default function Home() {
-  return <div>@TODO Create site</div>;
+  return <div className="h-[600px]">@TODO Create site</div>;
 }
