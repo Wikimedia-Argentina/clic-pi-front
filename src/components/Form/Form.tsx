@@ -1,6 +1,9 @@
-
+import countries from "../../../countries";
 
 function Form() {
+  console.log(countries )
+  
+
   return (
     <div>
         <h3 className="font-bold text-center mb-5 text-xl border-b-gray-500 border-b-2 pb-2 text-gray-900">Verifica si la obra es de dominio publico</h3>
@@ -36,20 +39,22 @@ function Form() {
     <input
       type="date"
       className=" border border-gray-500 peer block min-h-[auto] w-full rounded-lg bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-      placeholder="Select a date" />
+      placeholder="Selecciona una fecha" />
  
 </div>
 </div>
 
 
     <div className="flex flex-col mb-6 gap-3 w-[50%]" >
+      
     <label className="text-center text-lg font-bold">Pais</label>
     <select  className="bg-gray-50 border border-gray-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
       <option selected>Selecciona un pais</option>
-      <option value="FR">France</option>
-      <option value="US">United States</option>
-      <option value="CA">Canada</option>
-      <option value="DE">Germany</option>
+      {countries.map((item,index)=>(
+        
+        <option value={item.cioc} className="" key={index}>{item.flag} {item.name.common} </option>
+))}
+     
     </select>
      
     </div>
