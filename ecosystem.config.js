@@ -1,6 +1,6 @@
 module.exports = [
   {
-    name: "tourism-frontend",
+    name: "corvus-frontend",
     script: "server.js",
     autorestart: true,
     watch: false,
