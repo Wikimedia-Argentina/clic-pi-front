@@ -1,16 +1,39 @@
 import countries from "../../../countries";
+import { useState } from "react";
+import UnknowStatus from "../artworkStatus/UnknowStatus";
+import IsPublicDomain from "../artworkStatus/IsPublicDomain";
+import NotPublicDomain from "../artworkStatus/NotPublicDomain";
+
 
 function Form() {
-  console.log(countries )
-  
+  const [componentToShow, setComponentToShow] = useState<JSX.Element | null>(null);
+
+  function randomIntFromInterval(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  const number = randomIntFromInterval(1, 3);
+
+  const handleButtonClick = () => {
+    if (number === 1) {
+      setComponentToShow(<IsPublicDomain />);
+    } else if (number === 2) {
+      setComponentToShow(<NotPublicDomain />);
+    } else {
+      setComponentToShow(<UnknowStatus />);
+    }
+  };
 
   return (
     <div>
-        <h3 className="font-bold text-center mb-5 text-xl border-b-gray-500 border-b-2 pb-2 text-gray-900">Verifica si la obra es de dominio publico</h3>
-     <div
-  className="block max-w-md rounded-lg bg-white text-gray-900 border-2 border-gray-400 p-10">
-  
-  <form className="">
+    
+     {componentToShow ? (
+       
+        <div>{componentToShow}</div>
+      ) : (
+     <div className="">
+   <h3 className="font-bold text-center mb-5 text-xl border-b-gray-500 border-b-2 pb-2 text-gray-900">Verifica si la obra es de dominio publico</h3>
+  <form className="block max-w-md rounded-lg bg-white text-gray-900 border-2 border-gray-400 p-10">
       <div className="flex flex-col mb-6 gap-3" >
     <label className="text-center text-lg  font-bold">Nombre de la obra</label>
       <input
@@ -74,14 +97,15 @@ function Form() {
     </div>
 
    
-    <button
-      type="submit"
+    <button type="button" 
+     onClick={handleButtonClick}
       className="inline-block w-full rounded-2xl  bg-gray-900 text-white px-6 pb-2 pt-2.5 text-lg font-bold"
       >
       Verificar
     </button>
   </form>
 </div>
+)}
     </div>
   );
 }
