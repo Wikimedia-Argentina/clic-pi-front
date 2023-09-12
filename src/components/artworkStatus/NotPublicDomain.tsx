@@ -16,17 +16,24 @@ function NotPublicDomain(){
             
         ): ( 
             <div  className=" w-[90%] flex md:w-[100%] md: rounded-lg mx-auto text-center text-gray-900 shadow-2xl ">
-            <div className="p-5"> <h1 className="text-xl font-bold my-5 border-b-2 pb-2 border-b-red-500">La obra no se encuentra en el dominio publico</h1>
-            <div className="text-start my-5 pl-4">
+            <div className="p-5 flex flex-col gap-12"> <h1 className="text-xl font-bold my-5 border-b-2 pb-2 border-b-red-500">La obra no se encuentra en el dominio publico</h1>
+            <div className="text-start pl-4">
             <p>La obra <b>Lorem ipsum dolor sit.</b></p>
              <p>Realizada por el autor : <b>Lorem ipsum dolor sit.</b></p>
             </div>
-            <p>No se encuentra en el dominio publico debido a : <span>Lorem ipsum dolor sit amet consectetur.</span></p>
+           <div>
+           <p>No se encuentra en el dominio publico debido a : <span>Lorem ipsum dolor sit amet consectetur.</span></p>
              
              <button onClick={ShowForm} className="bg-red-500  rounded-lg text-white p-3 mt-5">
                  Volver a verificar
-             </button></div>
-             <div><Image src="/obra.jpg" alt="obra" height={300} width={300} className="hidden md:block" /></div>
+             </button>
+             </div></div>
+
+
+             <div> 
+                <Image src="/obra.jpg" alt="obra" height={300} width={300} className="hidden lg:block blur-[3px]" />
+                
+                </div>
          </div>
         )}
     </div>
