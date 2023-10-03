@@ -2,7 +2,12 @@ import React,{ useState } from "react";
 import Form from "../Form";
 import Image from "next/image";
 
-function UnknowStatus(){
+interface Props{
+    title: string,
+    autor: string
+}
+ 
+function UnknowStatus({ title,autor}: Props){
     const [componentToShow, setComponentToShow] = useState<JSX.Element | null>(null);
     
     function ShowForm(){
@@ -16,10 +21,10 @@ function UnknowStatus(){
                 
             ): ( 
                 <div  className=" w-[90%] flex md:w-[100%] md: rounded-lg mx-auto text-center text-gray-900 shadow-2xl ">
-                <div className="p-5 flex flex-col gap-12"> <h1 className="text-xl font-bold my-5 border-b-2 pb-2 border-b-gray-500">No se pudo determinar el estado de la obra</h1>
+                <div className="p-5 flex flex-col gap-10"> <h1 className="text-xl font-bold my-5 border-b-2 pb-2 border-b-gray-500">No se pudo determinar el estado de la obra</h1>
                 <div className="text-start  pl-4">
-                <p>La obra <b>Lorem ipsum dolor sit.</b></p>
-                 <p>Realizada por el autor : <b>Lorem ipsum dolor sit.</b></p>
+                <p>La obra <b>{title}</b></p>
+                <p>Realizada por el autor : <b>{autor}</b></p>
                 </div>
             <div>
                  <p>Puedes buscar mas informacion acerca de la obra en el siguiente<a href=""><b> Enlace </b></a> </p>

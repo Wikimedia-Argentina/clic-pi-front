@@ -2,7 +2,12 @@ import React,{ useState } from "react";
 import Form from "../Form";
 import Image from "next/image";
 
-function NotPublicDomain(){
+interface Props{
+    title: string,
+    autor: string
+}
+ 
+function NotPublicDomain({ title,autor}: Props){
     const [componentToShow, setComponentToShow] = useState<JSX.Element | null>(null);
     
     function ShowForm(){
@@ -16,13 +21,13 @@ function NotPublicDomain(){
             
         ): ( 
             <div  className=" w-[90%] flex md:w-[100%] md: rounded-lg mx-auto text-center text-gray-900 shadow-2xl ">
-            <div className="p-5 flex flex-col gap-12"> <h1 className="text-xl font-bold my-5 border-b-2 pb-2 border-b-red-500">La obra no se encuentra en el dominio publico</h1>
+            <div className="p-5 flex flex-col gap-10"> <h1 className="text-xl font-bold my-5 border-b-2 pb-2 border-b-red-500">La obra no se encuentra en el dominio publico</h1>
             <div className="text-start pl-4">
-            <p>La obra <b>Lorem ipsum dolor sit.</b></p>
-             <p>Realizada por el autor : <b>Lorem ipsum dolor sit.</b></p>
+            <p>La obra <b className="text-xl">{title}</b></p>
+            <p>Realizada por el autor : <b className="text-xl">{autor}</b></p>
             </div>
            <div>
-           <p>No se encuentra en el dominio publico debido a : <span>Lorem ipsum dolor sit amet consectetur.</span></p>
+           <p>No se encuentra en el dominio publico debido a : <span>Plazo de proteccion</span></p>
              
              <button onClick={ShowForm} className="bg-red-500  rounded-lg text-white p-3 mt-5">
                  Volver a verificar
@@ -31,7 +36,7 @@ function NotPublicDomain(){
 
 
              <div> 
-                <Image src="/obra.jpg" alt="obra" height={300} width={300} className="hidden lg:block blur-[3px]" />
+                <Image src="/obra.jpg" alt="obra" height={300} width={300} className="hidden md:block blur-[3px]" />
                 
                 </div>
          </div>
