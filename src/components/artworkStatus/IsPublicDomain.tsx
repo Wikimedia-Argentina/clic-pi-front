@@ -4,10 +4,11 @@ import Image from "next/image";
 
 interface Props{
     title: string,
-    autor: string
+    autor: string,
+    lastname: string
 }
  
-function IsPublicDomain({ title,autor}: Props){
+function IsPublicDomain({ title,autor,lastname}: Props){
     const [componentToShow, setComponentToShow] = useState<JSX.Element | null>(null);
     
     function ShowForm(){
@@ -24,7 +25,7 @@ function IsPublicDomain({ title,autor}: Props){
                  <h1 className="text-xl font-bold my-5 border-b-2 pb-2 border-b-green-500">La obra es de dominio publico</h1>
                <div className="text-start  pl-4">
                <p>La obra <b>{title}</b></p>
-                <p>Realizada por el autor : <b>{autor}</b></p>
+                <p>Realizada por el autor : <b>{autor} {lastname}</b></p>
                </div>
                 <div className="">
                 <p>Puedes buscar mas informacion acerca de la obra en el siguiente<a href=""><b> Enlace </b></a> </p>
@@ -33,7 +34,7 @@ function IsPublicDomain({ title,autor}: Props){
                 </button>
                 </div></div>
 
-                <div><Image src="/obra.jpg" alt="obra" height={300} width={300} className="hidden md:block" /></div>
+                <div className="flex justify-center"><Image src="/obra.jpg" alt="obra" height={300} width={300} className="hidden md:block" /></div>
             </div> )}
         
     </div>
