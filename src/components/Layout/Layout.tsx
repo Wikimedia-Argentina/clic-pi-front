@@ -14,7 +14,7 @@ function Layout({ children }: Props) {
     <>
       <Header />
       <Banner/>
-      <div className="py-[50px] h-[900px]  bg-gray-50 flex justify-center"><Form/></div>
+      <div className="py-[50px] h-[1200px]  bg-gray-50 flex justify-center"><Form/></div>
       {/* <main>{children}</main>
        */}
       <Footer />
