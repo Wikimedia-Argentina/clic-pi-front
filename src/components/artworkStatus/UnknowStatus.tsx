@@ -27,11 +27,11 @@ function UnknowStatus({ title, autor }: Props) {
 
             ) : (
                 <div className=" w-[90%] flex md:w-[100%] md: rounded-lg mx-auto text-center text-gray-900 shadow-2xl ">
-                    <div className="p-5 flex flex-col gap-10"> <h1 className="text-xl font-bold my-5 border-b-2 pb-2 border-b-gray-500">No se pudo determinar el estado de la obra</h1>
+                    <div className="p-5 flex flex-col gap-10"> <h1 className="text-xl font-bold mt-5 border-b-2 pb-2 border-b-gray-500">No se pudo determinar el estado de la obra</h1>
                         <div className="text-start  pl-4">
                             <p>La obra : <b>{title}</b></p>
                             
-                            {Array.isArray(autor) ? (
+                            {autor.length> 1? (
                                 <div className="flex mt-5">
                                     <p className="min-w-[150px]">Realizada por:</p>
                                     <div className="flex px-4 flex-wrap w-full">
@@ -41,9 +41,15 @@ function UnknowStatus({ title, autor }: Props) {
                                     </div>
                                 </div>
                             ) : (
-                                <div>
-                                <p>Realizada por el autor: <b>{autor} </b></p>
+                                <div className="flex gap-5 mt-5">
+                                <p className="">Realizada por el autor: </p>
+                                <div className="">
+                                {autor.map((item, index) => (
+                                <p className="" key={index}> {item.nombre} {item.apellido} </p>
+                            ))}
                                 </div>
+                            </div>
+                                
                             )}
                           
                         </div>

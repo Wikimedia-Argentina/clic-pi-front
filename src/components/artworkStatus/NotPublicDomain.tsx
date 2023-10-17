@@ -26,12 +26,13 @@ function NotPublicDomain({ title, autor }: Props) {
 
 
             ) : (
-                <div className=" w-[90%] flex md:w-[100%] md: rounded-lg mx-auto text-center text-gray-900 shadow-2xl ">
-                    <div className="p-5 flex flex-col gap-14  xl:gap-15"> <h1 className="text-xl font-bold my-5 border-b-2 pb-2 border-b-red-500">La obra no se encuentra en el dominio publico</h1>
+                <div className=" w-full flex md:w-[100%] rounded-lg mx-auto text-center text-gray-900 shadow-2xl ">
+                    <div className="p-5 flex flex-col gap-14  xl:gap-15"> 
+                    <h1 className="text-xl font-bold mt-5 border-b-2 pb-2 border-b-red-500">La obra no se encuentra en el dominio publico</h1>
                         <div className="text-start pl-4">
                         <p>La obra : <b>{title}</b></p>
                             
-                            {Array.isArray(autor) ? (
+                            {autor.length> 1? (
                                 <div className="flex mt-5">
                                     <p className="min-w-[150px]">Realizada por:</p>
                                     <div className="flex px-4 flex-wrap w-full">
@@ -41,13 +42,19 @@ function NotPublicDomain({ title, autor }: Props) {
                                     </div>
                                 </div>
                             ) : (
-                                <div>
-                                <p>Realizada por el autor: <b>{autor} </b></p>
+                                <div className="flex gap-5 mt-5">
+                                <p className="">Realizada por el autor: </p>
+                                <div className="">
+                                {autor.map((item, index) => (
+                                <p className="" key={index}> {item.nombre} {item.apellido} </p>
+                            ))}
                                 </div>
+                            </div>
+                                
                             )}
                         </div>
                         <div>
-                            <p>No se encuentra en el dominio publico debido a : <span>Plazo de proteccion</span></p>
+                            <p className="text-sm">No se encuentra en el dominio publico debido al Plazo de proteccion</p>
 
                             <button onClick={ShowForm} className="bg-red-500  rounded-lg text-white p-3 mt-5">
                                 Volver a verificar

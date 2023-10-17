@@ -65,7 +65,7 @@ function Form() {
     date: string,
     country: string
   }
-  const agregarColaborador = () => {
+  const addColaborador = () => {
     if (
       colaboradorActual.nombre.trim() === "" ||
       colaboradorActual.apellido.trim() === ""
@@ -194,7 +194,6 @@ function Form() {
       });
 
       if (validDates.length === 0) {
-
         return null;
       }
 
@@ -215,15 +214,11 @@ function Form() {
     return null;
   }
 
-  console.log("fecha ultima", findClosestDate(colaboradores.map(item => item.deathDate)))
-  console.log(findClosestDate(colaboradores.map(item => item.deathDate))?.getFullYear())
-
   function determineDomain(number: number) {
     const today = new Date();
     if (colaboradores.length > 0) {
       const lastDate = findClosestDate(colaboradores.map(item => item.deathDate))
       if (lastDate) {
-        console.log("dermine domain: ", today.getFullYear() + lastDate.getFullYear())
         const yearsDifference = (today.getFullYear() - lastDate.getFullYear())
         if (yearsDifference >= number) {
           setComponentToShow(<IsPublicDomain title={workArt.nombre} autor={colaboradores} />);
@@ -239,7 +234,6 @@ function Form() {
     const today = new Date();
     const emisionDate: string[] = workArt.date.split("-")
     const year = parseInt(emisionDate[0])
-    console.log("dermine domain: ", today.getFullYear() - year)
     const yearsDifference = today.getFullYear() - year
     if (yearsDifference >= number) {
       setComponentToShow(<IsPublicDomain title={workArt.nombre} autor={colaboradores}/>)
@@ -249,11 +243,15 @@ function Form() {
   }
 
 
-  const handleButtonClick = () => {
-
-    const type = workArt.type
-    console.log("Type:", type);
-    console.log(workArt);
+  const handleButtonClick  = (e: { preventDefault: () => void; }) => {
+    e.preventDefault(); // Previene la recarga de la página
+    if (colaboradores.length === 0) {
+      Swal.fire({
+        text: 'Por favor, ingresa al menos un autor',
+        padding: '1em',
+      });
+    } else {
+      const type = workArt.type
     if (workArt.country == "Argentina") {
       if (type === "cientifica" || type === "literaria" || type === "artistica" || type === "colaboraciones") {
         determineDomain(70);
@@ -270,16 +268,8 @@ function Form() {
       setComponentToShow(<UnknowStatus title={workArt.nombre} autor={colaboradores}  />);
 
     }
-    //  let param1 = (type === "cientifica" || type === "literaria" || type === "artistica" || type === "colaboracion") && (year - dYear >= 70)
-    // let typeCarta = (type === "cartas") && (year - dYear >= 20)
-    //   let typeEmision = ((type === "anonimas" || type === "emisiones") && (year - emisionDate >= 50)) || type === "fotografia" && year - emisionDate >= 20
-    // if (Country === "Argentina" && aliveValue == "si" && ((param1) || (typeCarta) || ((type === "audiovisual") && (year - dYear >= 50)) || typeEmision)) {
-    //   setComponentToShow(<IsPublicDomain title={nameObra} autor={nameAutor} lastname={lastname} />);
-    // } else if (Country !== "Argentina") {
-    //   setComponentToShow(<UnknowStatus title={nameObra} autor={nameAutor} lastname={lastname} />);
-    // } else {
-    //   setComponentToShow(<NotPublicDomain title={nameObra} autor={nameAutor} lastname={lastname} />);
-    // }
+    
+    }
   }
 
   return (
@@ -366,7 +356,7 @@ function Form() {
 
             </div>
 
-            <div className="flex mb-4 relative"> {Texto && (
+            <div className="flex mb-4 relative mt-4"> {Texto && (
               <div onClick={mostrarTexto} className="absolute  top-0 left-[15%] z-50 text-center p-3 cursor-pointer  bg-white text-sm w-[270px] rounded-2xl border border-gray-500 shadow">
                 Se considerará al colaborador con fecha más reciente.
 
@@ -471,9 +461,9 @@ function Form() {
                   {index !== null ? (
                     <div className="p-2 cursor-pointer rounded-lg border text-sm border-gray-500" onClick={() => saveChanges(index)}>confirmar</div>
                   ) : (
-                    <div className="p-2 cursor-pointer rounded-lg border text-sm border-gray-500" onClick={agregarColaborador}>confirmar</div>
+                    <div className="p-2 cursor-pointer rounded-lg border text-sm border-gray-500" onClick={addColaborador}>confirmar</div>
                   )}
-                    <div className="p-2 cursor-pointer rounded-lg border text-sm border-gray-500" onClick={handleAddAutor}>cancelar</div>
+                    <div className="p-2 cursor-pointer rounded-lg border text-sm border-gray-500" onClick={colaboradores.length > 0 ? handleAddAutor : undefined}>cancelar</div>
                 </div>
               </div>
             ) : (
