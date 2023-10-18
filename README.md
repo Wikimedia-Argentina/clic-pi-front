@@ -54,3 +54,32 @@ docker network create corvus-network
 # THEN start APP container
 TAG=[x.x.x] docker compose -f compose.yml -f compose.prod.yml up -d app
 ```
+
+## Building LOCAL and DEPLOY
+
+### On local machine
+
+```sh
+#!bash
+export DOCKER_BUILDKIT=1
+
+export COMPOSE_DOCKER_CLI_BUILD=1
+
+## Tag, build and start containers.
+DOCKER_DEFAULT_PLATFORM=linux/amd64 TAG=[API-VERSION] docker compose -f compose.yml -f compose.prod.yml build
+
+## Push image
+docker push registry.khem.io/khemlabs/corvus-frontend:[API-VERSION]
+```
+
+### On the server
+
+```sh
+#!bash
+
+## Pull image
+docker pull registry.khem.io/khemlabs/corvus-frontend:[API-VERSION]
+
+## Run
+TAG=[API-VERSION] docker compose -f compose.yml -f compose.prod.yml up -d
+```

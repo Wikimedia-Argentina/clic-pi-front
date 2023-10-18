@@ -1,4 +1,11 @@
-FROM node:18-alpine AS base
+############################################################
+# Dockerfile to build NodeJS 18 Installed Containers
+# Based on Node:18
+############################################################
+ARG IMAGE="18-alpine"
+ARG PLATFORM="linux/amd64"
+
+FROM --platform=$PLATFORM node:18-alpine as base
 
 # Install dependencies only when needed
 FROM base AS deps
