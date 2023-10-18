@@ -356,26 +356,13 @@ function Form() {
 
             </div>
 
-            <div className="flex mb-4 relative mt-4"> {Texto && (
-              <div onClick={mostrarTexto} className="absolute  top-0 left-[15%] z-50 text-center p-3 cursor-pointer  bg-white text-sm w-[270px] rounded-2xl border border-gray-500 shadow">
-                Se considerará al colaborador con fecha más reciente.
-
-              </div>
-            )}<label className=" text-center flex-initial w-[95%]  font-bold " htmlFor="">Datos del autor  </label>
-             <div className="flex flex-initial w-[5%]">
-             <div className="cursor-pointer pr-2 font-bold text-md" onClick={handleAddAutor} >+</div>
-
-                <div
-                  className="cursor-pointer inline-block font-bold "
-                  onClick={mostrarTexto}
-                >
-                  ?
-                </div>
-             </div>
-            </div>
+         
             {addAutor ? (
+              
               <div className="slide">
-
+            <div className=" text-center m-4"> 
+            <label className="  font-bold " htmlFor="">Datos del autor  </label>
+            </div>
                 <div className="flex gap-3 mt-3">
                   <div className="flex flex-col mb-6 gap-3 w-[50%]"  >
                     <label className="text-center " >Nombre </label>
@@ -469,14 +456,31 @@ function Form() {
             ) : (
 
               <div className="mx-auto w-[350px] mb-10">
+                   <div className="flex mb-4 relative mt-4"> {Texto && (
+              <div onClick={mostrarTexto} className="absolute  top-0 left-[15%] z-50 text-center p-3 cursor-pointer  bg-white text-sm w-[270px] rounded-2xl border border-gray-500 shadow">
+                Se considerará al colaborador con fecha más reciente.
+
+              </div>
+            )}<label className=" text-center flex-initial w-[100%]  font-bold " htmlFor="">Datos del autor  </label>
+             <div className="flex flex-initial w-[5%]">
+             <div className="cursor-pointer pr-2 font-bold text-md" onClick={handleAddAutor} >+</div>
+
+                <div
+                  className="cursor-pointer inline-block font-bold "
+                  onClick={mostrarTexto}
+                >
+                  ?
+                </div>
+             </div>
+            </div>
                 <Slider {...settings}>
                   {colaboradores.map((colaborador, index) => (
                     <div key={index} className="">
                       <div className="bg-white rounded-lg shadow-lg p-4 min-h-[150px] border border-gray-500 text-sm">
                         <div className="flex mb-1"> <h2 className="text-lg flex-initial w-[80%] text-gray-800 ">Nombre: {colaborador.nombre} </h2> <div className="flex justify-center  flex-initial min-w-[60px]" >
 
-                          <div className="p-1  text-sm cursor-pointer" onClick={() => edit(index)}  ><img src="../edit_icon.svg" alt="" width={20} /></div>
-                          <div className="p-1 text-sm cursor-pointer" onClick={() => deleteItem(index)}><img src="../delete.svg" alt="" width={20} /></div>
+                          <div className="p-1  text-sm cursor-pointer" onClick={() => edit(index)}  ><img className="" src="../edit_icon.svg" alt="" width={15} /></div>
+                          <div className="p-1 text-sm cursor-pointer" onClick={() => deleteItem(index)}><img src="../delete.svg" alt="" width={15} /></div>
                         </div></div>
                         <h3 className="text-gray-600 mb-1">Apellido: {colaborador.apellido}</h3>
                         <p className="text-gray-600 mb-1 ">Estado: {colaborador.aliveValue === "si" ? 'fallecido' : 'vivo'} </p>
