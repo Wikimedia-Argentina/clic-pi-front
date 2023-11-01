@@ -2,18 +2,90 @@ import React, { useState } from "react";
 import Form from "../Form";
 import Image from "next/image";
 
+
 type Colaborador = {
     nombre: string,
-    apellido: string,
     aliveValue: string,
     deathDate: string,
-    birthday: string
-  }
-interface Props {
-    title: string,
-    autor: Colaborador[]
 }
-function NotPublicDomain({ title, autor }: Props) {
+
+type WorkArt = {
+    nombre: string,
+    type: string,
+    date: string,
+
+}
+interface Props {
+    autor: Colaborador[]
+    artworks: WorkArt
+}
+type DataType = {
+    [key: string]: {
+        image: string;
+        autor: string;
+        description: string;
+    };
+};
+const dataType: DataType = {
+    artística: {
+        image: "/artistica.jpg",
+        autor: "Francisco de Zurbarán",
+        description: "obra artística"
+    },
+    científica: {
+        image: "/Critique_of_the_Theory_of_Evolution.jpg",
+        autor: "Thomas Hunt Morgan",
+        description: "obra científica"
+    },
+    cartas: {
+        image: "/cartaIrene.jpg",
+        autor: "Carta d'Irene",
+        description: "Carta d'Irene"
+    },
+    audiovisual: {
+        image: "/Película_barba_azul.jpg",
+        autor: "Ernst Lubitsch",
+        description: "obra audiovisual"
+    },
+    institucional: {
+        image: "/institucional.jpg",
+        autor: "",
+        description: "obra institucional"
+    },
+    literaria: {
+        image: "/Miguel_de_Cervantes.png",
+        autor: "Miguel de Cervantes",
+        description: "obra literaria"
+    },
+    fotografía: {
+        image: "/Fotografía.jpg",
+        autor: "",
+        description: "Fotografía dell'Emilia "
+    },
+    emisiones: {
+        image: "/emisionradio.jpg",
+        autor: "Radio WWOZ",
+        description: "Radio WWOZ"
+    },
+    colaboraciones: {
+        image: "/colaboracion.jpg",
+        autor: "",
+        description: "Claros en el bosque"
+    },
+    interpretacionArtistica: {
+        image: "/interpretacion.jpg",
+        autor: "Paramount",
+        description: " film The Secret Garden"
+    },
+
+}
+
+function data(e: string) {
+    return dataType[e];
+}
+function NotPublicDomain({ artworks, autor }: Props) {
+    console.log("artworks.type:", artworks.type);
+    console.log("dataType keys:", Object.keys(dataType));
     const [componentToShow, setComponentToShow] = useState<JSX.Element | null>(null);
 
     function ShowForm() {
@@ -27,44 +99,34 @@ function NotPublicDomain({ title, autor }: Props) {
 
             ) : (
                 <div className=" w-full flex md:w-[100%] rounded-lg mx-auto text-center text-gray-900 shadow-2xl ">
-                    <div className="p-5 flex flex-col gap-14  xl:gap-15"> 
-                    <h1 className="text-xl font-bold mt-5 border-b-2 pb-2 border-b-red-500">La obra no se encuentra en el dominio publico</h1>
-                        <div className="text-start pl-4">
-                        <p>La obra : <b>{title}</b></p>
-                            
-                            {autor.length> 1? (
-                                <div className="flex mt-5">
-                                    <p className="min-w-[150px]">Realizada por:</p>
-                                    <div className="flex px-4 flex-wrap w-full">
-                                    {autor.map((item, index) => (
-                                    <p className="w-1/3 min-w-[100px]" key={index}> {item.nombre} {item.apellido} </p>
-                                ))}
-                                    </div>
-                                </div>
-                            ) : (
-                                <div className="flex gap-5 mt-5">
-                                <p className="">Realizada por el autor: </p>
-                                <div className="">
-                                {autor.map((item, index) => (
-                                <p className="" key={index}> {item.nombre} {item.apellido} </p>
-                            ))}
-                                </div>
-                            </div>
-                                
-                            )}
+                    <div className="p-2 flex flex-col md:w-[600px] ">
+                        <h1 className="text-xl font-bold mt-5 border-b-2 pb-2 border-b-red-500">La obra no se encuentra en el dominio público</h1>
+                        <div className="text-start p-10">
+                        <p className="mb-3">Obra: {artworks.nombre}</p>
+                        <p className="mb-3">Realizada por: {autor.map(colab => colab.nombre !==""? `${colab.nombre}` : 'Autor Desconocido').join(', ')}</p>
+                            <p >No se encuentra en dominio público debido al plazo de protección de las obras según la Ley 11.723 de propiedad <a href="" className=" text-teal-700">intelectual argentina </a>
+                            </p> <br />
+                            <p>Sin embargo, si tienes los derechos de autor sobre esta obra, puedes publicarla bajo licencias Creative Commons para permitir su uso sin restricciones. Recordá que para su carga en Wikimedia Commons, sólo las licencias CC BY y CC BY-SA son compatibles</p>
+
                         </div>
                         <div>
-                            <p className="text-sm">No se encuentra en el dominio publico debido al Plazo de proteccion</p>
-
-                            <button onClick={ShowForm} className="bg-red-500  rounded-lg text-white p-3 mt-5">
+                            <button onClick={ShowForm} className="bg-red-500  rounded-lg text-white p-3 ">
                                 Volver a verificar
                             </button>
-                        </div></div>
+                        </div>
+                    </div>
 
-
-                    <div className="flex justify-center">
-                        <Image src="/obra.jpg" alt="obra" height={300} width={300} className="hidden md:block blur-[3px]" />
-
+                    <div className="relative flex justify-center ">
+                        <Image
+                            src={data(artworks.type).image}
+                            alt={data(artworks.type).description}
+                            height={300}
+                            width={300}
+                            className="hidden lg:block blur-sm"
+                        />
+                        <div className=" absolute inset-0 bg-black bg-opacity-5 flex items-end justify-end">
+                            <p className="hidden lg:block text-sm mb-2 text-dark">{data(artworks.type).autor}</p>
+                        </div>
                     </div>
                 </div>
             )}
