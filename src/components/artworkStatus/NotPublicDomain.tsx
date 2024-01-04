@@ -58,9 +58,9 @@ const dataType: DataType = {
         description: "obra literaria"
     },
     fotografía: {
-        image: "/Fotografía.jpg",
+        image: "/Fotografia.jpg",
         autor: "",
-        description: "Fotografía dell'Emilia "
+        description: "Fotografia dell'Emilia "
     },
     emisiones: {
         image: "/emisionradio.jpg",
@@ -102,8 +102,8 @@ function NotPublicDomain({ artworks, autor }: Props) {
                     <div className="p-2 flex flex-col md:w-[600px] ">
                         <h1 className="text-xl font-bold mt-5 border-b-2 pb-2 border-b-red-500">La obra no se encuentra en el dominio público</h1>
                         <div className="text-start p-10">
-                        <p className="mb-3">Obra: {artworks.nombre}</p>
-                        <p className="mb-3">Realizada por: {autor.map(colab => colab.nombre !==""? `${colab.nombre}` : 'Autor Desconocido').join(', ')}</p>
+                            <p className="mb-3">Obra: {artworks.nombre}</p>
+                            <p className="mb-3">Realizada por: {autor.map(colab => colab.nombre !== "" ? `${colab.nombre}` : 'Autor Desconocido').join(', ')}</p>
                             <p >No se encuentra en dominio público debido al plazo de protección de las obras según la Ley 11.723 de propiedad <a href="" className=" text-teal-700">intelectual argentina </a>
                             </p> <br />
                             <p>Sin embargo, si tienes los derechos de autor sobre esta obra, puedes publicarla bajo licencias Creative Commons para permitir su uso sin restricciones. Recordá que para su carga en Wikimedia Commons, sólo las licencias CC BY y CC BY-SA son compatibles</p>

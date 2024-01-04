@@ -60,15 +60,14 @@ function Form() {
     setPublicationDate(e.target.value);
   };
   const handleAddAutor = () => {
-   
-    if (workArt.type !== "") {
+    if (workArt.type != "") {
       return (setAddAutor(!addAutor))
-    }else {
+    } else {
       Swal.fire({
         text: 'Por favor, Selecciona un tipo de obra.',
         padding: '1em',
       })
-      return;
+
     }
   }
   const mostrarTexto = () => {
@@ -76,7 +75,6 @@ function Form() {
   }
 
   const addColaborador = () => {
-
     if (colaboradorActual.aliveValue === "si" && colaboradorActual.deathDate === "") {
       Swal.fire({
         text: 'Por favor, ingresa la fecha de fallecimiento del colaborador.',
@@ -84,9 +82,9 @@ function Form() {
       })
       return;
     }
-    if ((colaboradorActual.aliveValue === "si" &&(colaboradorActual.nombre === "" )) || (workArt.type==="audiovisual" && (colaboradorActual.productor ==="" || colaboradorActual.director ==="" ))) {
+    if ((colaboradorActual.aliveValue === "si" && (colaboradorActual.nombre === "")) || (workArt.type === "audiovisual" && (colaboradorActual.productor === "" || colaboradorActual.director === "" || colaboradorActual.nombre === ""))) {
       Swal.fire({
-        text: 'Por favor, ingresa el autor, productor y director',
+        text: 'Por favor, llena los datos',
         padding: '1em',
       })
       return;
@@ -98,7 +96,11 @@ function Form() {
       })
       return;
     }
-    setColaboradores([...colaboradores, colaboradorActual]);
+
+    if (workArt.type != "") {
+
+      setColaboradores([...colaboradores, colaboradorActual]);
+    }
     setColaboradorActual({
       nombre: "",
       aliveValue: '',
@@ -108,9 +110,10 @@ function Form() {
       productor: '',
 
     });
-
     handleAddAutor();
+
   };
+
   const deleteItem = (index: number) => {
 
     const newColaboradores = [...colaboradores];
@@ -127,7 +130,6 @@ function Form() {
       })
       return;
     }
-
 
     const newColaboradores = [...colaboradores];
     newColaboradores[index] = colaboradorActual;
@@ -146,10 +148,24 @@ function Form() {
   }
   const edit = (index: number) => {
     const selectedColaborador = colaboradores[index];
-    const updatedColaborador = { ...selectedColaborador, aliveValue: '' };
+    let updatedColaborador = { ...selectedColaborador, aliveValue: '' };
     setColaboradorActual(updatedColaborador);
+
     setIndex(index)
     handleAddAutor();
+  };
+  const cancel = () => {
+
+    handleAddAutor();
+    setColaboradorActual({
+      nombre: "",
+      aliveValue: '',
+      deathDate: "",
+      compositor: '',
+      director: "",
+      productor: '',
+
+    });
   };
 
   function convertirFechas(stringsFechas: string[]): Date[] {
@@ -160,7 +176,6 @@ function Form() {
     });
     return fechasConvertidas;
   }
-
 
   function findClosestDate(dates: string[]): Date | null {
     if (dates.length !== 0) {
@@ -192,43 +207,43 @@ function Form() {
 
     return null;
   }
-  function name(){
-    return colaboradores.find(colaborador => colaborador.nombre === '' );
- }
- var text= "Esta obra es huérfana. Sin embargo, por su fecha de publicación, se considera que el autor ha fallecido hace más de 70 años y, por ende, se encuentra en dominio público"
+  function name() {
+    return colaboradores.find(colaborador => colaborador.nombre === '');
+  }
+  var text = "Esta obra es huérfana. Sin embargo, por su fecha de publicación, se considera que el autor ha fallecido hace más de 70 años y, por ende, se encuentra en dominio público"
   function determineDomain(number: number) {
     const today = new Date();
-    if(name() !== undefined && workArt.type!=="fotografía" && workArt.type !=="institucional" && parseInt(workArt.date.split('-')[0])< 1900){
+    if (name() !== undefined && workArt.type !== "fotografía" && workArt.type !== "institucional" && parseInt(workArt.date.split('-')[0]) < 1900) {
       return setComponentToShow(<IsPublicDomain autor={colaboradores} artworks={workArt} text={text} />);
-    } 
-      if (colaboradores.length > 0) {
-        const lastDate = findClosestDate(colaboradores.map(item => item.deathDate))
-        if (lastDate) {
-          const yearsDifference = (today.getFullYear() - lastDate.getFullYear())
-          if (yearsDifference >= number) {
-            setComponentToShow(<IsPublicDomain autor={colaboradores} artworks={workArt} text={""} />);
-          } else {
-            setComponentToShow(<NotPublicDomain autor={colaboradores} artworks={workArt} />);
-          }
+    }
+    if (colaboradores.length > 0) {
+      const lastDate = findClosestDate(colaboradores.map(item => item.deathDate))
+      if (lastDate) {
+        const yearsDifference = (today.getFullYear() - lastDate.getFullYear())
+        if (yearsDifference >= number) {
+          setComponentToShow(<IsPublicDomain autor={colaboradores} artworks={workArt} text={""} />);
         } else {
-          setComponentToShow(<NotPublicDomain  autor={colaboradores} artworks={workArt} />);
+          setComponentToShow(<NotPublicDomain autor={colaboradores} artworks={workArt} />);
         }
-      
+      } else {
+        setComponentToShow(<NotPublicDomain autor={colaboradores} artworks={workArt} />);
+      }
+
     }
   }
 
   function determinePublication(number: number) {
-    if(name() !== undefined && workArt.type!=="fotografía" && workArt.type !=="institucional" && parseInt(workArt.date.split('-')[0])< 1900){
+    if (name() !== undefined && workArt.type !== "fotografía" && workArt.type !== "institucional" && parseInt(workArt.date.split('-')[0]) < 1900) {
       return setComponentToShow(<IsPublicDomain autor={colaboradores} artworks={workArt} text={text} />);
-    } 
+    }
     const today = new Date();
     const emisionDate: string[] = workArt.date.split("-")
     const year = parseInt(emisionDate[0])
     const yearsDifference = today.getFullYear() - year
     if (yearsDifference >= number) {
-      setComponentToShow(<IsPublicDomain autor={colaboradores} artworks={workArt}  text={""} />)
+      setComponentToShow(<IsPublicDomain autor={colaboradores} artworks={workArt} text={""} />)
     } else {
-      setComponentToShow(<NotPublicDomain  autor={colaboradores} artworks={workArt} />);
+      setComponentToShow(<NotPublicDomain autor={colaboradores} artworks={workArt} />);
     }
   }
 
@@ -256,7 +271,7 @@ function Form() {
         if (workArt.visualFormat) {
           determinePublication(70)
         } else {
-          <NotPublicDomain  autor={colaboradores} artworks={workArt} />
+          <NotPublicDomain autor={colaboradores} artworks={workArt} />
         }
       }
     }
@@ -291,6 +306,7 @@ function Form() {
         director: "",
         productor: '',
       })
+      setAddAutor(true)
       setColaboradores([]);
       setPublicationDate("")
     }
@@ -301,31 +317,31 @@ function Form() {
       title: 'Tipos de obras ',
       width: 900,
       html:
-        '<p style="font-size: 17px;"><b>Literaria:</b> Una obra literaria es una creación escrita, como una novela, poema, cuento o drama, que expresa ideas, emociones, experiencias y narraciones a través del uso del lenguaje y la escritura.</p>' +
+        '<p style="font-size: 17px;"><b>Literaria:</b> Es una creación escrita, como una novela, poema, cuento o drama, que expresa ideas, emociones, experiencias y narraciones a través del uso del lenguaje y la escritura.</p>' +
         '<pre style="font-size: 15px;">Ej: Romeo y Julieta</pre>' + '<br>' +
 
-        '<p style="font-size: 17px;"><b>Artística:</b> Una obra artística es una creación que se enfoca en la expresión creativa y estética, como pinturas, esculturas o composiciones musicales.</p>' +
+        '<p style="font-size: 17px;"><b>Artística:</b> Es una creación que se enfoca en la expresión creativa y estética, como pinturas, esculturas o composiciones musicales.</p>' +
         '<pre style="font-size: 15px;">Ej: Obra teatral</pre>' + '<br>' +
 
-        '<p style="font-size: 17px;"><b>Fotografía:</b> Una obra de fotografía es una creación visual que captura momentos, paisajes o sujetos mediante la fotografía.</p>' +
+        '<p style="font-size: 17px;"><b>Fotografía:</b> Es una creación visual que captura momentos, paisajes o sujetos mediante la fotografía.</p>' +
         '<pre style="font-size: 15px;">Ej: Retrato fotográfico</pre>' + '<br>' +
 
-        '<p style="font-size: 17px;"><b>Audiovisual:</b> Una obra audiovisual incluye medios visuales y auditivos, como películas, videos o documentales.</p>' +
+        '<p style="font-size: 17px;"><b>Audiovisual:</b> Incluye medios visuales y auditivos, como películas, videos o documentales.</p>' +
         '<pre style="font-size: 15px;">Ej: Películas</pre>' + '<br>' +
 
-        '<p style="font-size: 17px;"><b>Emisión radiofónica:</b> Una emisión radiofónica es una obra transmitida a través de la radio, que puede incluir programas, entrevistas y música.</p>' +
+        '<p style="font-size: 17px;"><b>Emisión radiofónica:</b> Es una obra transmitida a través de la radio, que puede incluir programas, entrevistas y música.</p>' +
         '<pre style="font-size: 15px;">Ej: Entrevista radial</pre>' +
 
-        '<p style="font-size: 17px;"><b>Institucional:</b> Una obra institucional se refiere a la documentación o publicaciones creadas por organizaciones o instituciones, como informes anuales o manuales.</p>' +
+        '<p style="font-size: 17px;"><b>Institucional:</b> Se refiere a la documentación o publicaciones creadas por organizaciones o instituciones, como informes anuales o manuales.</p>' +
         '<pre style="font-size: 15px;">Ej: Manual de políticas de una organización</pre>' + '<br>' +
 
-        '<p style="font-size: 17px;"><b>Colaboración:</b> Una obra de colaboración involucra la contribución de múltiples autores o artistas para crear una obra conjunta.</p>' +
+        '<p style="font-size: 17px;"><b>Colaboración:</b> Involucra la contribución de múltiples autores o artistas para crear una obra conjunta.</p>' +
         '<pre style="font-size: 15px;">Ej: Un álbum musical con varias colaboraciones</pre>' + '<br>' +
 
-        '<p style="font-size: 17px;"><b>Carta:</b> Una carta es una obra escrita personal que comunica mensajes o sentimientos a destinatarios específicos.</p>' +
+        '<p style="font-size: 17px;"><b>Carta:</b> Es una obra escrita personal que comunica mensajes o sentimientos a destinatarios específicos.</p>' +
         '<pre style="font-size: 15px;">Ej: Carta de amor</pre>' + '<br>' +
 
-        '<p style="font-size: 17px;"><b>Interpretación artística:</b> La interpretación artística implica la representación creativa de una obra existente, como una obra de teatro o una adaptación cinematográfica de un libro.</p>' +
+        '<p style="font-size: 17px;"><b>Interpretación artística:</b> Implica la representación creativa de una obra existente, como una obra de teatro o una adaptación cinematográfica de un libro.</p>' +
         '<pre style="font-size: 15px;">Ej: Interpretación teatral de una novela clásica</pre>' + '<br>',
 
       showCloseButton: true,
@@ -334,17 +350,17 @@ function Form() {
     });
   }
   return (
-    <div>
+    <div className=" ">
 
       {componentToShow ? (
         <div>{componentToShow}</div>
       ) : (
-        <div className="">
-          <h3 className="font-bold text-center mb-5 text-xl border-b-gray-500 border-b-2 pb-2 text-gray-900">Verifica si la obra es de dominio publico</h3>
+        <div className=" ">
+          <h3 className=" font-bold text-center mb-5 text-xl border-b-gray-500 border-b-2 pb-2 text-gray-900">Verifica si la obra es de dominio publico</h3>
 
-          <form className="block max-w-md rounded-lg bg-white text-gray-900 border-2 border-gray-400 p-10" onSubmit={handleButtonClick}  >
-            <div className="flex gap-2">
-              <div className="flex flex-col mb-6 gap-3 w-[50%]" >
+          <form className="block   rounded-lg bg-white text-gray-900 border-2 border-gray-400 p-10" onSubmit={handleButtonClick}  >
+            <div className="flex gap-2 justify-center">
+              <div className="flex flex-col mb-6 gap-3 w-[50%] " >
                 <label className="text-center text-md  font-bold">Nombre de la obra</label>
                 <input type="text" className="bg-transparent border border-gray-500 rounded-lg p-2" required name="nameObra" value={workArt.nombre}
                   onChange={(e) =>
@@ -397,7 +413,7 @@ function Form() {
                 </div></div>)}
 
             {PublicationDate === '' && (
-              <div className="mb-3">
+              <div className="mb-2">
                 <p className="text-center " >¿Sabes la fecha de publicación? </p>
                 <fieldset className="flex justify-center gap-6 my-3">
                   <div className="">
@@ -434,10 +450,13 @@ function Form() {
 
             {addAutor ? (
               <div className="slide">
-                <div className="font-bold text-center mt-10"> Datos del autor</div>
+                <div className="font-bold text-center mt-8"> Datos del autor</div>
                 {workArt.type === 'institucional' ? (
                   <div className="flex flex-col my-6 gap-3 w-[100%]"  >
-                    <label className="text-center " >Nombre de institución / organización </label>
+                    <div className="flex relative">
+                      <label className="text-center w-[100%]" >Nombre de institución / organización</label>
+                      <span className="right-3 text-red-500 absolute text-xl">*</span>
+                    </div>
                     <input
                       onChange={(e) =>
                         setColaboradorActual({
@@ -451,8 +470,9 @@ function Form() {
                 ) : workArt.type === 'audiovisual' ? (
                   <div>
                     <div className="flex gap-3 mt-3">
-                      <div className="flex flex-col mb-6 gap-3 w-[50%]"  >
-                        <label className="text-center " >Autor </label>
+                      <div className="flex flex-col  gap-3 w-[50%]"  >
+                        <div className="flex relative"><label className="w-[90%] text-center text-sm " >Autor</label>
+                          <span className="right-3 text-red-500 absolute text-xl">*</span> </div>
                         <input required
                           onChange={(e) =>
                             setColaboradorActual({
@@ -464,7 +484,10 @@ function Form() {
                           value={colaboradorActual.nombre} />
                       </div>
                       <div className="flex flex-col  gap-3 w-[50%]"  >
-                        <label className="text-center "  >Productor </label>
+                        <div className="flex relative">
+                          <label className="text-center w-[100%] text-sm " >Productor</label>
+                          <span className="right-3 text-red-500 absolute text-xl">*</span>
+                        </div>
                         <input required
                           onChange={(e) =>
                             setColaboradorActual({
@@ -477,9 +500,12 @@ function Form() {
                       </div>
 
                     </div>
-                    <div className="flex gap-3 mt-3">
-                      <div className="flex flex-col mb-6 gap-3 w-[50%]"  >
-                        <label className="text-center " >Director </label>
+                    <div className="flex gap-3 mt-5">
+                      <div className="flex flex-col  gap-3 w-[50%]"  >
+                        <div className="flex relative">
+                          <label className="text-center text-sm  w-[100%]" >Director</label>
+                          <span className="right-3 text-red-500 absolute text-xl">*</span>
+                        </div>
                         <input required
                           onChange={(e) =>
                             setColaboradorActual({
@@ -491,7 +517,7 @@ function Form() {
                           value={colaboradorActual.director} />
                       </div>
                       <div className="flex flex-col  gap-3 w-[50%]"  >
-                        <label className="text-center " >Compositor musical</label>
+                        <label className="text-center text-sm " >Compositor musical</label>
                         <input
                           onChange={(e) =>
                             setColaboradorActual({
@@ -509,7 +535,11 @@ function Form() {
                   <div>
                     <div className="flex gap-3 mt-3">
                       <div className="flex flex-col  gap-3 w-[100%]"  >
-                        <label className="text-center " >Nombre y apellido</label>
+                        <div className="flex relative">
+                          <label className="text-center text-sm w-[100%]" >Nombre y apellido</label>
+                          {colaboradorActual.aliveValue == 'si' && <span className="right-3 text-red-500 absolute text-xl">*</span>}
+                        </div>
+
                         <input
                           onChange={(e) =>
                             setColaboradorActual({
@@ -520,10 +550,10 @@ function Form() {
                           className="bg-transparent border border-gray-500 rounded-lg p-2"
                           value={colaboradorActual.nombre} />
                       </div>
-                     
+
                     </div>
                   </div>)}
-                {colaboradorActual.aliveValue === '' && workArt.type !== "institucional" &&  (
+                {colaboradorActual.aliveValue === '' && workArt.type !== "institucional" && (
                   <div className="my-6">
                     <label className="text-center justify-center flex ">¿Autor Fallecido?</label>
                     <div className="flex justify-center gap-5 m-3">
@@ -580,22 +610,25 @@ function Form() {
                   ) : (
                     <div className="p-2 cursor-pointer rounded-lg border text-sm border-gray-500" onClick={addColaborador}>confirmar</div>
                   )}
-                  <div className="p-2 cursor-pointer rounded-lg border text-sm border-gray-500" onClick={colaboradores.length > 0 ? handleAddAutor : undefined}>cancelar</div>
+                  <div className="p-2 cursor-pointer rounded-lg border text-sm border-gray-500" onClick={colaboradores.length > 0 ? cancel : undefined}>cancelar</div>
                 </div>
               </div>
             ) : (
-              <div className="mx-auto w-[350px] my-10">
+              <div className="mx-auto w-[350px] my-8">
                 <div className="flex mb-4 relative mt-4"> {Texto && (
-                  <div onClick={mostrarTexto} className="absolute  top-0 left-[15%] z-50 text-center p-3 cursor-pointer  bg-white text-sm w-[270px] rounded-2xl border border-gray-500 shadow">
+                  <div className="absolute  top-0 left-[15%]   z-50 text-center p-3 cursor-pointer  bg-white text-sm w-[270px] rounded-xl border border-gray-500 shadow">
                     Se considerará al colaborador con fecha más reciente.
+                    <div onClick={mostrarTexto} className="p-1 mt-3 h-[30px] cursor-pointer mx-auto bg-gray-500 text-sm w-[80px] text-gray-100  shadow" >Aceptar</div>
                   </div>
-                )}<label className=" text-center flex-initial w-[100%]  font-bold " htmlFor="">Añadir Autor / Colaborador</label>
-                  <div className="flex flex-initial w-[10%] gap-3">
-                   {workArt.type !=="audiovisual" && workArt.type!=="institucional" &&(
-                     <Image className=" cursor-pointer" src="../add.svg" alt="add.svg" height={20} width={19} onClick={handleAddAutor} />
-                   )}
-                    <Image className=" cursor-pointer" src="../question.svg" alt="question.svg" height={22} width={22} onClick={mostrarTexto} />
-                  </div>
+                )}<label className=" text-center flex-initial w-[100%]  font-bold " htmlFor="">Datos autor</label>
+
+                  {workArt.type !== "audiovisual" && workArt.type !== "científica" && workArt.type !== "literaria" && workArt.type !== "artística" && workArt.type !== "institucional" && (
+                    <div className="absolute flex right-0 gap-3">
+                      <Image className=" cursor-pointer" src="../add.svg" alt="add.svg" height={20} width={19} onClick={handleAddAutor} />
+                      <Image className=" cursor-pointer" src="../question.svg" alt="question.svg" height={22} width={22} onClick={mostrarTexto} /></div>
+
+                  )}
+
                 </div>
                 <Slider {...settings}>
                   {colaboradores.map((colaborador, index) => (
@@ -603,22 +636,22 @@ function Form() {
                       <div className="bg-white rounded-lg shadow-lg p-4 min-h-[130px] flex border border-gray-500 text-sm">
                         <div className="flex justify-start flex-initial w-[90%] items-center text-gray-600  ">
                           {workArt.type === "audiovisual" ? (
-                            <div  ><p >Autor: {colaborador.nombre  !==""? `${colaborador.nombre} ` : 'Autor Desconocido'}</p>
-                             <p >Productor: {colaborador.productor}</p> 
-                             <p >Director: {colaborador.director }</p>
-                             <p >compositor: {colaborador.compositor  !==""? `${colaborador.compositor} ` : 'Desconocido'}</p>
+                            <div  ><p >Autor: {colaborador.nombre != '' ? colaborador.nombre : 'Autor desconocido'}</p>
+                              <p >Productor: {colaborador.productor}</p>
+                              <p >Director: {colaborador.director}</p>
+                              <p >compositor: {colaborador.compositor !== "" ? `${colaborador.compositor} ` : 'Desconocido'}</p>
                               {colaborador.deathDate !== "" && (<p >Fecha : {colaborador.deathDate}</p>)}</div>
                           ) : workArt.type === "institucional" ? (
                             <div><p className="text-gray-600 mb-1">Institución / Organización: {colaborador.nombre !== "" ? colaborador.nombre : 'Desconocido'}</p>
                             </div>
                           ) : (<div >
-                            <p >Nombre: {colaborador.nombre  !==""? `${colaborador.nombre} ` : 'Autor Desconocido'}</p>
+                            <p >Nombre: {colaborador.nombre != '' ? colaborador.nombre : 'Autor desconocido'}</p>
                             <p>Estado: {colaborador.aliveValue === "si" ? 'fallecido' : 'vivo'} </p>
                             {colaborador.deathDate !== "" && (<p >Fecha : {colaborador.deathDate}</p>)}</div>)}
                         </div>
                         <div className="flex justify-end flex-initial w-[15%]" >
                           <div className="p-1  text-sm cursor-pointer" onClick={() => edit(index)}  ><Image className="" src="../edit_icon.svg" alt="" width={15} height={15} /></div>
-                          {workArt.type!=="institucional" && workArt.type!=="audiovisual" &&( 
+                          {workArt.type !== "institucional" && workArt.type !== "audiovisual" && (
                             <div className="p-1 text-sm cursor-pointer" onClick={() => deleteItem(index)}><Image src="../delete.svg" alt="" width={15} height={15} /></div>
                           )}
                         </div>
