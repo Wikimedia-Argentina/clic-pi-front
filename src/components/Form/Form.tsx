@@ -622,7 +622,7 @@ function Form() {
                   </div>
                 )}<label className=" text-center flex-initial w-[100%]  font-bold " htmlFor="">Datos autor</label>
 
-                  {workArt.type !== "audiovisual" && workArt.type !== "científica" && workArt.type !== "literaria" && workArt.type !== "artística" && workArt.type !== "institucional" && (
+                  {workArt.type == "colaboraciones" && (
                     <div className="absolute flex right-0 gap-3">
                       <Image className=" cursor-pointer" src="../add.svg" alt="add.svg" height={20} width={19} onClick={handleAddAutor} />
                       <Image className=" cursor-pointer" src="../question.svg" alt="question.svg" height={22} width={22} onClick={mostrarTexto} /></div>
@@ -646,7 +646,7 @@ function Form() {
                             </div>
                           ) : (<div >
                             <p >Nombre: {colaborador.nombre != '' ? colaborador.nombre : 'Autor desconocido'}</p>
-                            <p>Estado: {colaborador.aliveValue === "si" ? 'fallecido' : 'vivo'} </p>
+                            <p>Estado: {colaborador.aliveValue === "si" ? 'fallecido' : 'Desconocido'} </p>
                             {colaborador.deathDate !== "" && (<p >Fecha : {colaborador.deathDate}</p>)}</div>)}
                         </div>
                         <div className="flex justify-end flex-initial w-[15%]" >

@@ -108,10 +108,10 @@ function IsPublicDomain({ artworks, autor, text }: Props) {
                 <div> {componentToShow}</div>
 
 
-            ) : (<div className=" w-full flex md:w-[100%] rounded-lg mx-auto text-center text-gray-900 shadow-2xl ">
-                <div className="p-5 flex flex-col gap-14 lg:10">
+            ) : (<div className=" xl:w-[1000px] min-h-[350px]  m-5 flex md:w-[700px] rounded-lg mx-auto text-center text-gray-900 shadow-2xl ">
+                <div className="p-2 flex flex-col w-[100%]  xl:w-[80%] ">
                     <h1 className="text-xl font-bold mt-5 border-b-2 pb-2 border-b-green-500">La obra está en el dominio público</h1>
-                    <div className="text-start p-5">
+                    <div className="text-start p-5 ">
                         <p className="mb-3">Obra: {artworks.nombre}</p>
                         <p className="mb-3">realizada por: {autor.map(colab => colab.nombre !== "" ? `${colab.nombre}` : 'Autor Desconocido').join(', ')}</p>
                         {text !== "" && (<p>{text}</p>)}
@@ -127,22 +127,20 @@ function IsPublicDomain({ artworks, autor, text }: Props) {
                             )}
                     </div>
                     <div>
-                        <button onClick={ShowForm} className="bg-green-500  rounded-lg text-white p-3 ">
+                        <button onClick={ShowForm} className="bg-green-500  rounded-lg text-white p-3 my-3">
                             Volver a verificar
                         </button>
                     </div>
                 </div>
-                <div className="relative flex justify-center ">
+                <div className="relative  flex justify-center ">
                     <Image
                         src={data(artworks.type).image}
                         alt={data(artworks.type).description}
                         height={300}
                         width={300}
-                        className="hidden lg:block"
+                        className="hidden xl:block "
                     />
-                    <div className=" absolute inset-0 bg-black bg-opacity-5 flex items-end justify-end">
-                        <p className="hidden lg:block text-sm m-1  text-black ">{data(artworks.type).autor}</p>
-                    </div>
+
                 </div>
 
             </div>)}

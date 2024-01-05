@@ -98,8 +98,8 @@ function NotPublicDomain({ artworks, autor }: Props) {
 
 
             ) : (
-                <div className=" w-full flex md:w-[100%] rounded-lg mx-auto text-center text-gray-900 shadow-2xl ">
-                    <div className="p-2 flex flex-col md:w-[600px] ">
+                <div className="xl:w-[1000px] min-h-[350px]  m-5 flex md:w-[700px] rounded-lg mx-auto text-center text-gray-900 shadow-2xl ">
+                    <div className="p-2 flex flex-col w-[100%]  xl:w-[80%] ">
                         <h1 className="text-xl font-bold mt-5 border-b-2 pb-2 border-b-red-500">La obra no se encuentra en el dominio público</h1>
                         <div className="text-start p-10">
                             <p className="mb-3">Obra: {artworks.nombre}</p>
@@ -110,7 +110,7 @@ function NotPublicDomain({ artworks, autor }: Props) {
 
                         </div>
                         <div>
-                            <button onClick={ShowForm} className="bg-red-500  rounded-lg text-white p-3 ">
+                            <button onClick={ShowForm} className="bg-red-500  rounded-lg text-white p-3 my-3">
                                 Volver a verificar
                             </button>
                         </div>
@@ -122,11 +122,9 @@ function NotPublicDomain({ artworks, autor }: Props) {
                             alt={data(artworks.type).description}
                             height={300}
                             width={300}
-                            className="hidden lg:block blur-sm"
+                            className="hidden xl:block blur-sm"
                         />
-                        <div className=" absolute inset-0 bg-black bg-opacity-5 flex items-end justify-end">
-                            <p className="hidden lg:block text-sm mb-2 text-dark">{data(artworks.type).autor}</p>
-                        </div>
+
                     </div>
                 </div>
             )}
