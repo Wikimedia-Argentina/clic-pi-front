@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Image from "next/image";
+import TypeArt from "../artworkStatus/TypeArt";
 
 function Form() {
   const [componentToShow, setComponentToShow] = useState<JSX.Element | null>(null);
@@ -167,6 +168,16 @@ function Form() {
 
     });
   };
+  const [showTypeArt, setShowTypeArt] = useState(false);
+
+  const handleShowTypeArt = () => {
+    setShowTypeArt(true);
+  };
+
+  const handleCloseTypeArt = () => {
+    setShowTypeArt(false);
+  };
+
 
   function convertirFechas(stringsFechas: string[]): Date[] {
     const fechasConvertidas: Date[] = stringsFechas.map(fecha => {
@@ -312,53 +323,17 @@ function Form() {
     }
   };
 
-  function typeArt() {
-    Swal.fire({
-      title: 'Tipos de obras ',
-      width: 900,
-      html:
-        '<p style="font-size: 17px;"><b>Literaria:</b> Es una creación escrita, como una novela, poema, cuento o drama, que expresa ideas, emociones, experiencias y narraciones a través del uso del lenguaje y la escritura.</p>' +
-        '<pre style="font-size: 15px;">Ej: Romeo y Julieta</pre>' + '<br>' +
 
-        '<p style="font-size: 17px;"><b>Artística:</b> Es una creación que se enfoca en la expresión creativa y estética, como pinturas, esculturas o composiciones musicales.</p>' +
-        '<pre style="font-size: 15px;">Ej: Obra teatral</pre>' + '<br>' +
-
-        '<p style="font-size: 17px;"><b>Fotografía:</b> Es una creación visual que captura momentos, paisajes o sujetos mediante la fotografía.</p>' +
-        '<pre style="font-size: 15px;">Ej: Retrato fotográfico</pre>' + '<br>' +
-
-        '<p style="font-size: 17px;"><b>Audiovisual:</b> Incluye medios visuales y auditivos, como películas, videos o documentales.</p>' +
-        '<pre style="font-size: 15px;">Ej: Películas</pre>' + '<br>' +
-
-        '<p style="font-size: 17px;"><b>Emisión radiofónica:</b> Es una obra transmitida a través de la radio, que puede incluir programas, entrevistas y música.</p>' +
-        '<pre style="font-size: 15px;">Ej: Entrevista radial</pre>' +
-
-        '<p style="font-size: 17px;"><b>Institucional:</b> Se refiere a la documentación o publicaciones creadas por organizaciones o instituciones, como informes anuales o manuales.</p>' +
-        '<pre style="font-size: 15px;">Ej: Manual de políticas de una organización</pre>' + '<br>' +
-
-        '<p style="font-size: 17px;"><b>Colaboración:</b> Involucra la contribución de múltiples autores o artistas para crear una obra conjunta.</p>' +
-        '<pre style="font-size: 15px;">Ej: Un álbum musical con varias colaboraciones</pre>' + '<br>' +
-
-        '<p style="font-size: 17px;"><b>Carta:</b> Es una obra escrita personal que comunica mensajes o sentimientos a destinatarios específicos.</p>' +
-        '<pre style="font-size: 15px;">Ej: Carta de amor</pre>' + '<br>' +
-
-        '<p style="font-size: 17px;"><b>Interpretación artística:</b> Implica la representación creativa de una obra existente, como una obra de teatro o una adaptación cinematográfica de un libro.</p>' +
-        '<pre style="font-size: 15px;">Ej: Interpretación teatral de una novela clásica</pre>' + '<br>',
-
-      showCloseButton: true,
-      confirmButtonText: '<i class="fa fa-thumbs-up"></i> Confirmar',
-
-    });
-  }
   return (
     <div className=" ">
 
       {componentToShow ? (
         <div>{componentToShow}</div>
       ) : (
-        <div className=" ">
+        <div className="px-5">
           <h3 className=" font-bold text-center mb-5 text-xl border-b-gray-500 border-b-2 pb-2 text-gray-900">Verifica si la obra es de dominio publico</h3>
 
-          <form className="block   rounded-lg bg-white text-gray-900 border-2 border-gray-400 p-10" onSubmit={handleButtonClick}  >
+          <form className="block  rounded-lg bg-white text-gray-900 border-2 border-gray-400 p-10" onSubmit={handleButtonClick}  >
             <div className="flex gap-2 justify-center">
               <div className="flex flex-col mb-6 gap-3 w-[50%] " >
                 <label className="text-center text-md  font-bold">Nombre de la obra</label>
@@ -369,8 +344,17 @@ function Form() {
                       nombre: e.target.value
                     })} />
               </div>
+              {showTypeArt && (
+                <div className="max-w-[800px]  max-h-[84%] bg-white border-slate-800 border-[1px]  m-10 rounded-xl  py-5 " style={{ position: 'fixed', top: 20, zIndex: 9999, overflowY: 'auto' }}>
+                  <TypeArt />
+                  <button className=" bg-black text-white rounded-md  relative left-[45%]" style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }} onClick={handleCloseTypeArt}>
+                    Cerrar
+                  </button>
+                </div>
+              )}
               <div className="flex flex-col mb-6 gap-3 w-[50%] ">
-                <div className="flex justify-center">  <label className="text-center text-md font-bold w-[80%]">Tipo  </label> <Image className=" cursor-pointer" src="../question.svg" alt="question.svg" height={22} width={22} onClick={typeArt} /></div>
+
+                <div className="flex justify-center">  <label className="text-center text-md font-bold w-[80%]">Tipo  </label> <Image className=" cursor-pointer" src="../question.svg" alt="question.svg" height={22} width={22} onClick={handleShowTypeArt} /></div>
                 <select required className="bg-gray-50 text-center border border-gray-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value={workArt.type}
                   onChange={handleTypeChange}>
                   <option value="">Tipo de obra:  </option>
@@ -450,7 +434,7 @@ function Form() {
 
             {addAutor ? (
               <div className="slide">
-                <div className="font-bold text-center mt-8"> Datos del autor</div>
+                <div className="font-bold text-center mt-6"> Datos del autor</div>
                 {workArt.type === 'institucional' ? (
                   <div className="flex flex-col my-6 gap-3 w-[100%]"  >
                     <div className="flex relative">
@@ -618,7 +602,7 @@ function Form() {
                 <div className="flex mb-4 relative mt-4"> {Texto && (
                   <div className="absolute  top-0 left-[15%]   z-50 text-center p-3 cursor-pointer  bg-white text-sm w-[270px] rounded-xl border border-gray-500 shadow">
                     Se considerará al colaborador con fecha más reciente.
-                    <div onClick={mostrarTexto} className="p-1 mt-3 h-[30px] cursor-pointer mx-auto bg-gray-500 text-sm w-[80px] text-gray-100  shadow" >Aceptar</div>
+                    <div onClick={mostrarTexto} className="p-1 mt-3 h-[30px] cursor-pointer mx-auto bg-black rounded-lg text-sm w-[80px] text-white shadow" >Aceptar</div>
                   </div>
                 )}<label className=" text-center flex-initial w-[100%]  font-bold " htmlFor="">Datos autor</label>
 
@@ -681,6 +665,7 @@ function Form() {
 
         </div>
       )}
+
     </div>
   );
 }
