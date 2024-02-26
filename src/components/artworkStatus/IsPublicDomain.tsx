@@ -15,7 +15,7 @@ type WorkArt = {
 
 }
 interface Props {
-    text: string
+    text?: string
     autor: Colaborador[]
     artworks: WorkArt
 }
@@ -87,6 +87,7 @@ function data(e: string) {
 function IsPublicDomain({ artworks, autor, text }: Props) {
     const [componentToShow, setComponentToShow] = useState<JSX.Element | null>(null);
 
+
     function publicationDate(e: number, publicationYear: number) {
         if (e && publicationYear === 0) {
             const today = new Date();
@@ -114,11 +115,10 @@ function IsPublicDomain({ artworks, autor, text }: Props) {
                     <div className="text-start p-5 ">
                         <p className="mb-3">Obra: {artworks.nombre}</p>
                         <p className="mb-3">realizada por: {autor.map(colab => colab.nombre !== "" ? `${colab.nombre}` : 'Autor Desconocido').join(', ')}</p>
-                        {text !== "" && (<p>{text}</p>)}
-                        <br />
-                        {(artworks.type === "artistica" || artworks.type === "literaria" || artworks.type === "científica") && publicationDate(95, 0) ?
+                        <p className="my-5">{text && text} </p>
+                        {(artworks.type == "artística" || artworks.type == "literaria" || artworks.type == "científica") && publicationDate(95, 0) ?
                             (<p>Esta obra, además, puede ser publicada en Wikimedia Commons sin permisos adicionales. </p>
-                            ) : artworks.type === "fotografia" && publicationDate(1976, parseInt(artworks.date.split('-')[0])) ? (
+                            ) : artworks.type == "fotografía" && publicationDate(1976, parseInt(artworks.date.split('-')[0])) ? (
                                 <p>Esta obra, además, puede ser publicada en Wikimedia Commons sin permisos adicionales. </p>
                             ) : artworks.type === "institucional" && publicationDate(1946, parseInt(artworks.date.split('-')[0])) ? (
                                 <p>Esta obra, además, puede ser publicada en Wikimedia Commons sin permisos adicionales. </p>
