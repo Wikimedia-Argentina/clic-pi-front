@@ -2,14 +2,17 @@ import { useState, useEffect } from "react";
 import IsPublicDomain from "../artworkStatus/IsPublicDomain";
 import NotPublicDomain from "../artworkStatus/NotPublicDomain";
 import React, { Component } from "react";
-import Slider from 'react-slick';
 import Swal from 'sweetalert2'
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Image from "next/image";
-import TypeArt from "../artworkStatus/TypeArt";
+import DescriptionModal from "../Modal";
+import SliderArtist from "../Slider";
+import Label from "./Label";
+import ModalWarning from "../Modal/ModalWarning";
 
 function Form() {
+  var text = "Esta obra es huérfana. Sin embargo, por su fecha de publicación, se considera que el autor ha fallecido hace más de 70 años y, por ende, se encuentra en dominio público"
   const [componentToShow, setComponentToShow] = useState<JSX.Element | null>(null);
   const [addAutor, setAddAutor] = useState(true)
   const [Texto, setTexto] = useState(false);
@@ -47,13 +50,7 @@ function Form() {
 
   }
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+
 
 
 
@@ -221,10 +218,9 @@ function Form() {
   function name() {
     return colaboradores.find(colaborador => colaborador.nombre === '');
   }
-  var text = "Esta obra es huérfana. Sin embargo, por su fecha de publicación, se considera que el autor ha fallecido hace más de 70 años y, por ende, se encuentra en dominio público"
   function determineDomain(number: number) {
     const today = new Date();
-    if (name() !== undefined && workArt.type !== "fotografía" && workArt.type !== "institucional" && parseInt(workArt.date.split('-')[0]) < 1900) {
+    if (name() && workArt.type !== "fotografía" && workArt.type !== "institucional" && parseInt(workArt.date.split('-')[0]) < 1900) {
       return setComponentToShow(<IsPublicDomain autor={colaboradores} artworks={workArt} text={text} />);
     }
     if (colaboradores.length > 0) {
@@ -232,7 +228,7 @@ function Form() {
       if (lastDate) {
         const yearsDifference = (today.getFullYear() - lastDate.getFullYear())
         if (yearsDifference >= number) {
-          setComponentToShow(<IsPublicDomain autor={colaboradores} artworks={workArt} text={""} />);
+          setComponentToShow(<IsPublicDomain autor={colaboradores} artworks={workArt} />);
         } else {
           setComponentToShow(<NotPublicDomain autor={colaboradores} artworks={workArt} />);
         }
@@ -244,7 +240,7 @@ function Form() {
   }
 
   function determinePublication(number: number) {
-    if (name() !== undefined && workArt.type !== "fotografía" && workArt.type !== "institucional" && parseInt(workArt.date.split('-')[0]) < 1900) {
+    if (name() && workArt.type !== "fotografía" && workArt.type !== "institucional" && parseInt(workArt.date.split('-')[0]) < 1900) {
       return setComponentToShow(<IsPublicDomain autor={colaboradores} artworks={workArt} text={text} />);
     }
     const today = new Date();
@@ -252,7 +248,7 @@ function Form() {
     const year = parseInt(emisionDate[0])
     const yearsDifference = today.getFullYear() - year
     if (yearsDifference >= number) {
-      setComponentToShow(<IsPublicDomain autor={colaboradores} artworks={workArt} text={""} />)
+      setComponentToShow(<IsPublicDomain autor={colaboradores} artworks={workArt} />)
     } else {
       setComponentToShow(<NotPublicDomain autor={colaboradores} artworks={workArt} />);
     }
@@ -346,7 +342,7 @@ function Form() {
               </div>
               {showTypeArt && (
                 <div className="max-w-[800px]  max-h-[84%] bg-white border-slate-800 border-[1px]  m-10 rounded-xl  py-5 " style={{ position: 'fixed', top: 20, zIndex: 9999, overflowY: 'auto' }}>
-                  <TypeArt />
+                  <DescriptionModal />
                   <button className=" bg-black text-white rounded-md  relative left-[45%]" style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }} onClick={handleCloseTypeArt}>
                     Cerrar
                   </button>
@@ -433,113 +429,32 @@ function Form() {
             )}
 
             {addAutor ? (
-              <div className="slide">
-                <div className="font-bold text-center mt-6"> Datos del autor</div>
+              <div >
+                <div className="font-bold text-center mt-6">{workArt.type == 'colaboraciones' ? 'Datos del colaborador' : 'Datos del autor'}</div>
                 {workArt.type === 'institucional' ? (
-                  <div className="flex flex-col my-6 gap-3 w-[100%]"  >
-                    <div className="flex relative">
-                      <label className="text-center w-[100%]" >Nombre de institución / organización</label>
-                      <span className="right-3 text-red-500 absolute text-xl">*</span>
-                    </div>
-                    <input
-                      onChange={(e) =>
-                        setColaboradorActual({
-                          ...colaboradorActual,
-                          nombre: e.target.value,
-                        })
-                      }
-                      className="bg-transparent border border-gray-500 rounded-lg p-2"
-                      value={colaboradorActual.nombre} />
+                  <div className="mt-5 gap-3 "  >
+                    <Label setColaboradorActual={setColaboradorActual} colaborador={colaboradorActual} labelTitle={'Nombre institución'} type={'nombre'} />
                   </div>
                 ) : workArt.type === 'audiovisual' ? (
                   <div>
-                    <div className="flex gap-3 mt-3">
-                      <div className="flex flex-col  gap-3 w-[50%]"  >
-                        <div className="flex relative"><label className="w-[90%] text-center text-sm " >Autor</label>
-                          <span className="right-3 text-red-500 absolute text-xl">*</span> </div>
-                        <input required
-                          onChange={(e) =>
-                            setColaboradorActual({
-                              ...colaboradorActual,
-                              nombre: e.target.value,
-                            })
-                          }
-                          className="bg-transparent border border-gray-500 rounded-lg p-2"
-                          value={colaboradorActual.nombre} />
-                      </div>
-                      <div className="flex flex-col  gap-3 w-[50%]"  >
-                        <div className="flex relative">
-                          <label className="text-center w-[100%] text-sm " >Productor</label>
-                          <span className="right-3 text-red-500 absolute text-xl">*</span>
-                        </div>
-                        <input required
-                          onChange={(e) =>
-                            setColaboradorActual({
-                              ...colaboradorActual,
-                              productor: e.target.value,
-                            })
-                          }
-                          className="bg-transparent border border-gray-500 rounded-lg p-2"
-                          value={colaboradorActual.productor} />
-                      </div>
-
-                    </div>
                     <div className="flex gap-3 mt-5">
-                      <div className="flex flex-col  gap-3 w-[50%]"  >
-                        <div className="flex relative">
-                          <label className="text-center text-sm  w-[100%]" >Director</label>
-                          <span className="right-3 text-red-500 absolute text-xl">*</span>
-                        </div>
-                        <input required
-                          onChange={(e) =>
-                            setColaboradorActual({
-                              ...colaboradorActual,
-                              director: e.target.value,
-                            })
-                          }
-                          className="bg-transparent border border-gray-500 rounded-lg p-2"
-                          value={colaboradorActual.director} />
-                      </div>
-                      <div className="flex flex-col  gap-3 w-[50%]"  >
-                        <label className="text-center text-sm " >Compositor musical</label>
-                        <input
-                          onChange={(e) =>
-                            setColaboradorActual({
-                              ...colaboradorActual,
-                              compositor: e.target.value,
-                            })
-                          }
-                          className="bg-transparent border border-gray-500 rounded-lg p-2"
-                          value={colaboradorActual.compositor} />
-                      </div>
+                      <Label setColaboradorActual={setColaboradorActual} colaborador={colaboradorActual} labelTitle={'Autor del Argumento'} type={'nombre'} />
+                      <Label setColaboradorActual={setColaboradorActual} colaborador={colaboradorActual} labelTitle={'Productor'} type={'productor'} />
+                    </div>
 
+                    <div className="flex gap-3 mt-5">
+                      <Label setColaboradorActual={setColaboradorActual} colaborador={colaboradorActual} labelTitle={'Director'} type={'director'} />
+                      <Label setColaboradorActual={setColaboradorActual} colaborador={colaboradorActual} labelTitle={'Compositor'} type={'compositor'} />
                     </div>
                   </div>
                 ) : (
-                  <div>
-                    <div className="flex gap-3 mt-3">
-                      <div className="flex flex-col  gap-3 w-[100%]"  >
-                        <div className="flex relative">
-                          <label className="text-center text-sm w-[100%]" >Nombre y apellido</label>
-                          {colaboradorActual.aliveValue == 'si' && <span className="right-3 text-red-500 absolute text-xl">*</span>}
-                        </div>
-
-                        <input
-                          onChange={(e) =>
-                            setColaboradorActual({
-                              ...colaboradorActual,
-                              nombre: e.target.value,
-                            })
-                          }
-                          className="bg-transparent border border-gray-500 rounded-lg p-2"
-                          value={colaboradorActual.nombre} />
-                      </div>
-
-                    </div>
-                  </div>)}
+                  <div className=" mt-3">
+                    <Label setColaboradorActual={setColaboradorActual} colaborador={colaboradorActual} labelTitle={'Nombre y Apellido'} type={'nombre'} />
+                  </div>
+                )}
                 {colaboradorActual.aliveValue === '' && workArt.type !== "institucional" && (
                   <div className="my-6">
-                    <label className="text-center justify-center flex ">¿Autor Fallecido?</label>
+                    <label className="text-center justify-center flex ">{workArt.type == 'audiovisual' ? '¿Autor del argumento fallecido?' : '¿Autor Fallecido?'}</label>
                     <div className="flex justify-center gap-5 m-3">
                       <div className="">
                         <input
@@ -599,50 +514,25 @@ function Form() {
               </div>
             ) : (
               <div className="mx-auto w-[350px] my-8">
-                <div className="flex mb-4 relative mt-4"> {Texto && (
-                  <div className="absolute  top-0 left-[15%]   z-50 text-center p-3 cursor-pointer  bg-white text-sm w-[270px] rounded-xl border border-gray-500 shadow">
-                    Se considerará al colaborador con fecha más reciente.
-                    <div onClick={mostrarTexto} className="p-1 mt-3 h-[30px] cursor-pointer mx-auto bg-black rounded-lg text-sm w-[80px] text-white shadow" >Aceptar</div>
-                  </div>
-                )}<label className=" text-center flex-initial w-[100%]  font-bold " htmlFor="">Datos autor</label>
+                {Texto && (
+                  <ModalWarning mostrarTexto={mostrarTexto} />
+                )}
+                <div className="flex mb-4 relative mt-4">
 
-                  {workArt.type == "colaboraciones" && (
-                    <div className="absolute flex right-0 gap-3">
-                      <Image className=" cursor-pointer" src="../add.svg" alt="add.svg" height={20} width={19} onClick={handleAddAutor} />
-                      <Image className=" cursor-pointer" src="../question.svg" alt="question.svg" height={22} width={22} onClick={mostrarTexto} /></div>
 
-                  )}
+                  {workArt.type == "colaboraciones" ? (
+                    <div className="flex">
+                      <label className=" text-center flex-auto w-80 font-bold ">Añadir colaborador</label>
+
+                      <div className="absolute flex right-0  gap-3">
+                        <Image className=" cursor-pointer" src="../add.svg" alt="add.svg" height={20} width={19} onClick={handleAddAutor} />
+                        <Image className=" cursor-pointer" src="../question.svg" alt="question.svg" height={22} width={22} onClick={mostrarTexto} /></div></div>
+
+                  ) : <label className=" text-center w-[100%] font-bold ">Datos autor</label>
+                  }
 
                 </div>
-                <Slider {...settings}>
-                  {colaboradores.map((colaborador, index) => (
-                    <div key={index} className="">
-                      <div className="bg-white rounded-lg shadow-lg p-4 min-h-[130px] flex border border-gray-500 text-sm">
-                        <div className="flex justify-start flex-initial w-[90%] items-center text-gray-600  ">
-                          {workArt.type === "audiovisual" ? (
-                            <div  ><p >Autor: {colaborador.nombre != '' ? colaborador.nombre : 'Autor desconocido'}</p>
-                              <p >Productor: {colaborador.productor}</p>
-                              <p >Director: {colaborador.director}</p>
-                              <p >compositor: {colaborador.compositor !== "" ? `${colaborador.compositor} ` : 'Desconocido'}</p>
-                              {colaborador.deathDate !== "" && (<p >Fecha : {colaborador.deathDate}</p>)}</div>
-                          ) : workArt.type === "institucional" ? (
-                            <div><p className="text-gray-600 mb-1">Institución / Organización: {colaborador.nombre !== "" ? colaborador.nombre : 'Desconocido'}</p>
-                            </div>
-                          ) : (<div >
-                            <p >Nombre: {colaborador.nombre != '' ? colaborador.nombre : 'Autor desconocido'}</p>
-                            <p>Estado: {colaborador.aliveValue === "si" ? 'fallecido' : 'Desconocido'} </p>
-                            {colaborador.deathDate !== "" && (<p >Fecha : {colaborador.deathDate}</p>)}</div>)}
-                        </div>
-                        <div className="flex justify-end flex-initial w-[15%]" >
-                          <div className="p-1  text-sm cursor-pointer" onClick={() => edit(index)}  ><Image className="" src="../edit_icon.svg" alt="" width={15} height={15} /></div>
-                          {workArt.type !== "institucional" && workArt.type !== "audiovisual" && (
-                            <div className="p-1 text-sm cursor-pointer" onClick={() => deleteItem(index)}><Image src="../delete.svg" alt="" width={15} height={15} /></div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </Slider>
+                <SliderArtist edit={edit} deleteItem={deleteItem} artworks={workArt} autor={colaboradores} />
               </div>
 
             )}

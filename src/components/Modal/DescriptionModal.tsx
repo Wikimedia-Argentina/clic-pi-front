@@ -1,7 +1,4 @@
-import React from 'react';
-
-
-function TypeArt() {
+function DescriptionModal() {
     return (
         <div style={{ fontFamily: 'Arial, sans-serif', textAlign: 'start' }} className='  px-5'>
 
@@ -59,9 +56,9 @@ function TypeArt() {
                 <pre style={{ fontSize: '15px' }}>Ej: Interpretación teatral de una novela clásica</pre>
             </div>
 
+            <p>NOTA: Si el género de la obra audiovisual es musical, se debe considerar al compositor musical como co-autor de la obra</p>
 
         </div>
     );
 }
-
-export default TypeArt;
+export default DescriptionModal;
