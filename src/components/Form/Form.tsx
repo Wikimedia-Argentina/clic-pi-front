@@ -309,12 +309,12 @@ function Form() {
         determineDomain(50);
       } else if (type === "fotografía") {
         determinePublication(20);
-      } else if (type === "interpretacionArtistica") {
-        if (workArt.visualFormat) {
-          determinePublication(70);
-        } else {
-          <NotPublicDomain autor={colaboradores} artworks={workArt} />;
-        }
+      } else if (type === "interpretacionArtistica" && workArt.visualFormat) {
+        determinePublication(70);
+      } else {
+        setComponentToShow(
+          <NotPublicDomain autor={colaboradores} artworks={workArt} />,
+        );
       }
     }
   };
@@ -331,7 +331,11 @@ function Form() {
         text: "Deberás volver a llenar todos los campos",
         icon: "warning",
         showCloseButton: true,
-        confirmButtonText: '<i class="fa fa-thumbs-up"></i> Continuar',
+        confirmButtonText: '<i class="fa fa-thumbs-up"> Continuar</i>',
+        customClass: {
+          confirmButton: "custom-confirm-button",
+        },
+        buttonsStyling: false,
       });
       setWorkArt({
         nombre: "",
@@ -391,10 +395,9 @@ function Form() {
               )}
               <div className="flex flex-col mb-6 gap-3 w-[50%] ">
                 <div className="flex justify-center">
-                  {" "}
                   <label className="text-center text-md font-bold w-[80%]">
-                    Tipo{" "}
-                  </label>{" "}
+                    Tipo
+                  </label>
                   <Image
                     className=" cursor-pointer"
                     src="../question.svg"
@@ -421,15 +424,13 @@ function Form() {
                   <option value="colaboraciones">Colaboración </option>
                   <option value="cartas">Carta </option>
                   <option value="interpretacionArtistica">
-                    {" "}
-                    interpretación artística{" "}
+                    interpretación artística
                   </option>
                 </select>
               </div>
             </div>
             {workArt.type === "interpretacionArtistica" && (
               <div>
-                {" "}
                 <p className="text-center">
                   ¿La obra está en un formato sonoro o audiovisual?
                 </p>
@@ -447,7 +448,7 @@ function Form() {
                           visualFormat: true,
                         })
                       }
-                    />{" "}
+                    />
                     Sí
                   </label>
                   <label>
@@ -463,7 +464,7 @@ function Form() {
                           visualFormat: false,
                         })
                       }
-                    />{" "}
+                    />
                     No
                   </label>
                 </div>
@@ -742,7 +743,7 @@ function Form() {
               className="inline-block w-full rounded-2xl bg-gray-900
              text-white px-6 pb-2 pt-2.5 text-lg font-bold"
             >
-              Verificar{" "}
+              Verificar
             </button>
           </form>
         </div>
