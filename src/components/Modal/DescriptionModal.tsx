@@ -120,20 +120,27 @@ const DescriptionModal = ({ handleCloseTypeArt }: Props) => {
           className="px-5"
         >
           {modalData.map((item, index) => (
-            <div key={index} style={{ fontSize: "17px", marginBottom: "20px" }}>
+            <div
+              key={index}
+              style={{
+                fontSize: "17px",
+                marginBottom: "20px",
+              }}
+            >
               <strong>{item.title}:</strong> {item.description}
               <br />
               {item.clarification && (
                 <p>
-                  <span style={{ fontWeight: 500 }}>Aclaración:</span>{" "}
+                  <span style={{ fontWeight: 500 }}>Aclaración: </span>
+                  {""}
                   {item.clarification}
                 </p>
               )}
-              <pre style={{ fontSize: "15px" }}>Ej: {item.example}</pre>
+              <p style={{ fontSize: "15px" }}>Ej: {item.example}</p>
             </div>
           ))}
-          <p>
-            Fuente:{" "}
+          <p style={{ fontSize: 14 }}>
+            Fuente{" "}
             <a
               style={{ color: "blue" }}
               href="https://www.derechodeautor.org.ar/recursos/abc-sobre-derechos-de-autor/"

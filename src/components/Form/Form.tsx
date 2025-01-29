@@ -61,7 +61,11 @@ function Form() {
     } else {
       Swal.fire({
         text: "Por favor, Selecciona un tipo de obra.",
-        padding: "1em",
+        padding: "0.5em",
+        confirmButtonText: '<i class="fa fa-thumbs-up">Continuar</i>',
+        customClass: {
+          confirmButton: "custom-confirm-button-black",
+        },
       });
     }
   };
@@ -76,7 +80,11 @@ function Form() {
     ) {
       Swal.fire({
         text: "Por favor, ingresa la fecha de fallecimiento del colaborador.",
-        padding: "1em",
+        padding: "0.5em",
+        confirmButtonText: '<i class="fa fa-thumbs-up">Continuar</i>',
+        customClass: {
+          confirmButton: "custom-confirm-button-black",
+        },
       });
       return;
     }
@@ -84,13 +92,17 @@ function Form() {
       (colaboradorActual.aliveValue === "si" &&
         colaboradorActual.nombre === "") ||
       (workArt.type === "audiovisual" &&
-        (colaboradorActual.productor === "" ||
-          colaboradorActual.director === "" ||
-          colaboradorActual.nombre === ""))
+        (!colaboradorActual.productor ||
+          !colaboradorActual.director ||
+          !colaboradorActual.nombre))
     ) {
       Swal.fire({
         text: "Por favor, llena los datos",
-        padding: "1em",
+        padding: "0.5em",
+        confirmButtonText: '<i class="fa fa-thumbs-up">Continuar</i>',
+        customClass: {
+          confirmButton: "custom-confirm-button-black",
+        },
       });
       return;
     }
@@ -100,7 +112,11 @@ function Form() {
     ) {
       Swal.fire({
         text: "Por favor, elige una opción.",
-        padding: "1em",
+        padding: "0.5em",
+        confirmButtonText: '<i class="fa fa-thumbs-up">Continuar</i>',
+        customClass: {
+          confirmButton: "custom-confirm-button-black",
+        },
       });
       return;
     }
@@ -132,7 +148,43 @@ function Form() {
     ) {
       Swal.fire({
         text: "Por favor, ingresa la fecha de fallecimiento del colaborador.",
-        padding: "1em",
+        padding: "0.5em",
+        confirmButtonText: '<i class="fa fa-thumbs-up">Continuar</i>',
+        customClass: {
+          confirmButton: "custom-confirm-button-black",
+        },
+      });
+      return;
+    }
+    if (
+      (colaboradorActual.aliveValue === "si" &&
+        colaboradorActual.nombre === "") ||
+      (workArt.type === "audiovisual" &&
+        (!colaboradorActual.productor ||
+          !colaboradorActual.director ||
+          !colaboradorActual.nombre))
+    ) {
+      Swal.fire({
+        text: "Por favor, llena los datos",
+        padding: "0.5em",
+        confirmButtonText: '<i class="fa fa-thumbs-up">Continuar</i>',
+        customClass: {
+          confirmButton: "custom-confirm-button-black",
+        },
+      });
+      return;
+    }
+    if (
+      workArt.type !== "institucional" &&
+      colaboradorActual.aliveValue === ""
+    ) {
+      Swal.fire({
+        text: "Por favor, elige una opción.",
+        padding: "0.5em",
+        confirmButtonText: '<i class="fa fa-thumbs-up">Continuar</i>',
+        customClass: {
+          confirmButton: "custom-confirm-button-black",
+        },
       });
       return;
     }
@@ -291,6 +343,23 @@ function Form() {
       Swal.fire({
         text: "Por favor, ingresa al menos un autor",
         padding: "1em",
+        confirmButtonText: '<i class="fa fa-thumbs-up"> Continuar</i>',
+
+        customClass: {
+          confirmButton: "custom-confirm-button",
+        },
+      });
+    } else if (
+      !PublicationDate ||
+      (PublicationDate === "Si" && workArt.date == "")
+    ) {
+      Swal.fire({
+        text: "Por favor, completa fecha de publicación.",
+        padding: "0.5em",
+        confirmButtonText: '<i class="fa fa-thumbs-up">Continuar</i>',
+        customClass: {
+          confirmButton: "custom-confirm-button-black",
+        },
       });
     } else {
       const type = workArt.type;
@@ -573,7 +642,7 @@ function Form() {
                       <Label
                         setColaboradorActual={setColaboradorActual}
                         colaborador={colaboradorActual}
-                        labelTitle={"Compositor"}
+                        labelTitle={"Compositor musical"}
                         type={"compositor"}
                       />
                     </div>
