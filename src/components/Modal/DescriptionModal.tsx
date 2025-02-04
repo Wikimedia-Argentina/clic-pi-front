@@ -123,7 +123,6 @@ const DescriptionModal = ({ handleCloseTypeArt }: Props) => {
             <div
               key={index}
               style={{
-                fontSize: "17px",
                 marginBottom: "20px",
               }}
             >
@@ -131,16 +130,15 @@ const DescriptionModal = ({ handleCloseTypeArt }: Props) => {
               <br />
               {item.clarification && (
                 <p>
-                  <span style={{ fontWeight: 500 }}>Aclaración: </span>
+                  <span>Aclaración: </span>
                   {""}
                   {item.clarification}
                 </p>
               )}
-              <p style={{ fontSize: "15px" }}>Ej: {item.example}</p>
+              <p className="text-description">Ej: {item.example}</p>
             </div>
           ))}
-          <p style={{ fontSize: 14 }}>
-            Fuente{" "}
+          <p style={{ fontSize: 11 }}>
             <a
               style={{ color: "blue" }}
               href="https://www.derechodeautor.org.ar/recursos/abc-sobre-derechos-de-autor/"
