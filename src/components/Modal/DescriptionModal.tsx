@@ -14,15 +14,15 @@ const modalData = [
     example: "Partitura del Himno Nacional Argentino.",
   },
   {
-    title: "Científica",
+    title: "Científico",
     description:
       "Es una obra producto de la investigación de una o más personas sobre un tema, en forma de monografías, artículos de revista, obras de divulgación, etc.",
-    example: "“Viaje a la Patagonia Austral”, de Francisco P. Moreno.",
+    example: "“Viaje a la patagonia Austral” de Francisco P. Moreno",
   },
   {
     title: "Fotografía",
     description:
-      "No se diferencia entre analógica o digital, o si la misma tiene fines meramente informativos o artísticos.",
+      "No se diferencia entre análoga o digital, o si la misma tiene fines meramente informativos o artísticos.",
     clarification:
       "Al fotografiar otra obra (artística, audiovisual, etc.), aplican los plazos de protección de la misma.",
     example: "Foto de la fachada de la Casa Histórica de la Independencia.",
@@ -32,23 +32,23 @@ const modalData = [
     description:
       "Es una creación que incluye medios visuales y auditivos, como películas, videos o documentales.",
     clarification:
-      "Si el género de la obra audiovisual es musical, se debe considerar al compositor musical como coautor de la obra.",
+      "Si el género de la obra audiovisual es musical, se debe considerar al compositor musical como co-autor de la obra.",
     example:
-      "“Juan Moreira” de Leonardo Favio (dirección y guion), Tito Hurovich (dirección), Pocho Leyes y Luis María Serra (música) y Jorge Zuhair Jury (guion).",
+      "“Juan Moreira” de Leonardo Favio (dirección y guión), Tito Hurovich (dirección), Pocho Leyes y Luis María Serra (música) y Jorge Zuhair Jury (guión).",
   },
   {
-    title: "Emisión Radiofónica",
+    title: "Emisión radiofónica",
     description:
       "Es una obra transmitida a través de la radio, que puede incluir programas, entrevistas y música.",
     clarification:
       "Cada obra que conforma la emisión tiene sus propios plazos de protección individuales.",
     example:
-      "Entrevista de LR 11 (Radio Universidad Nacional de La Plata) a Alfredo Palacios.",
+      "Entrevista de LR 11 (Radio Universidad Nacional de La Plata)  a Alfredo Palacios.",
   },
   {
     title: "Institucional",
     description:
-      "Se refiere a documentación o publicaciones creadas por organizaciones o instituciones, como informes, manuales, folletos, etc., que no poseen la firma de un autor en particular.",
+      "Se refiere a documentación o publicaciones creadas por organizaciones o instituciones, como informes, manuales, folletos, etc; que no poseen la firma de un autor en particular.",
     example:
       "Resolución por la que se reincorpora personal docente cesanteado durante la dictadura.",
   },
@@ -56,7 +56,7 @@ const modalData = [
     title: "Colaboración",
     description:
       "Involucra la contribución de múltiples autores o artistas para crear una obra conjunta.",
-    example: "Álbum musical con varias colaboraciones.",
+    example: "Álbum musical con varias colaboraciones",
   },
   {
     title: "Carta",
@@ -66,7 +66,7 @@ const modalData = [
       "Carta a Juan Manuel Ortiz de Rosas reclamando no ir a un colegio pupilo.",
   },
   {
-    title: "Interpretación Artística",
+    title: "Interpretación artística",
     description:
       "Implica la representación creativa de una obra existente, como una obra de teatro o una adaptación cinematográfica de un libro.",
     example: "Interpretación teatral de “La Nona”, de Roberto Cossa.",
