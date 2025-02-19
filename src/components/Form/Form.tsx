@@ -796,15 +796,15 @@ function Form() {
                 />
               </div>
             )}
-            <div className="mb-6 flex min-h-[1.5rem] items-center justify-center pl-[1.5rem]">
-              <input
-                required
-                className="relative float-left -ml-[1.5rem] mr-[6px] h-[1.125rem] "
-                type="checkbox"
-              />
-              <label className="inline-block pl-[0.15rem] hover:cursor-pointer ">
-                Acepto las condiciones de uso
-              </label>
+            <div className="mb-6 flex min-h-[1.5rem] items-center justify-center gap-2 ">
+              <input required className="relative " type="checkbox" />
+              <a
+                target="_blank"
+                href="https://drive.google.com/file/d/1TVMz-mbW8PePkC18VxKvLhT4OHg_35Ai/view?usp=sharing"
+                className="inline-block  hover:cursor-pointer text-black underline  underline-offset-2 "
+              >
+                Acepto los términos y condiciones de uso.
+              </a>
             </div>
 
             <button
