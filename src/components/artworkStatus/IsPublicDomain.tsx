@@ -114,18 +114,59 @@ function IsPublicDomain({ artworks, autor, text }: Props) {
       ].includes(type) &&
       isPublicDomain(95, 0)
     ) {
-      return "Esta obra, además, puede ser publicada en Wikimedia Commons sin permisos adicionales.";
+      return (
+        <p>
+          Esta obra, además, puede ser publicada en{" "}
+          <a
+            target="_blank"
+            href="https://commons.wikimedia.org/wiki/Main_Page"
+          >
+            Wikimedia Commons
+          </a>{" "}
+          sin permisos adicionales.
+        </p>
+      );
     }
 
     if (type === "fotografía" && isPublicDomain(1976, year)) {
-      return "Esta obra, además, puede ser publicada en Wikimedia Commons sin permisos adicionales.";
+      return (
+        <p>
+          Esta obra, además, puede ser publicada en{" "}
+          <a
+            target="_blank"
+            href="https://commons.wikimedia.org/wiki/Main_Page"
+          >
+            Wikimedia Commons
+          </a>{" "}
+          sin permisos adicionales.
+        </p>
+      );
     }
 
     if (type === "institucional" && isPublicDomain(1946, year)) {
-      return "Esta obra, además, puede ser publicada en Wikimedia Commons sin permisos adicionales.";
+      return (
+        <p>
+          Esta obra, además, puede ser publicada en{" "}
+          <a
+            target="_blank"
+            href="https://commons.wikimedia.org/wiki/Main_Page"
+          >
+            Wikimedia Commons
+          </a>{" "}
+          sin permisos adicionales.
+        </p>
+      );
     }
 
-    return "Esta obra no puede ser publicada en Wikimedia Commons. Requiere una licencia compatible.";
+    return (
+      <p>
+        Esta obra no puede ser publicada en{" "}
+        <a target="_blank" href="https://commons.wikimedia.org/wiki/Main_Page">
+          Wikimedia Commons
+        </a>{" "}
+        requiere una licencia compatible.
+      </p>
+    );
   };
 
   return (
@@ -147,7 +188,7 @@ function IsPublicDomain({ artworks, autor, text }: Props) {
                   .join(", ")}
               </p>
               <p className="my-5">{text && text}</p>
-              <p>{getPublicationMessage()}</p>
+              {getPublicationMessage()}
             </div>
             <div>
               <button

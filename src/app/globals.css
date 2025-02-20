@@ -53,3 +53,7 @@ body {
   font-size: 11.5px;
   font-family: "Courier New", Courier, monospace;
 }
+
+a {
+  color: rgb(73, 90, 202);
+}
